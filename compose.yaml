@@ -1,0 +1,67 @@
+services:
+  webapp:
+    container_name: webapp
+    image: webapp
+    build:
+      context: .
+      dockerfile: webapp/webapp.dockerfile
+    ports:
+      - "4200:80"
+    restart: always
+    depends_on:
+      - server
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+  server:
+    container_name: server
+    image: server
+    build:
+      context: .
+      dockerfile: server/server.dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=db
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
+      - PORT=4000
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  db:
+    image: mongo:4.1.8-xenial
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    # env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - dbdata:/data/db
+    networks:
+      - mynetwork
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
+  node_modules:
+    driver: local
