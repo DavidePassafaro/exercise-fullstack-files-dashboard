@@ -1,17 +1,13 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <input type="email" formControlName="email" placeholder="Email" />
+<div class="login__container">
+  <h1 class="login__title">Login</h1>
 
-  <br />
+  <form class="login__form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input type="email" formControlName="email" placeholder="Email" />
 
-  <input type="password" formControlName="password" placeholder="Password" />
+    <input type="password" formControlName="password" placeholder="Password" />
 
-  <br />
+    <button csv-primary-button type="submit" [disabled]="form.invalid">Signup</button>
+  </form>
 
-  <button type="submit" [disabled]="form.invalid">Signup</button>
-</form>
-
-<br />
-<br />
-
-<p>Don't have an account?</p>
-<button routerLink="/auth/signup">Sign up</button>
+  <a outerLink="/auth/signup">Don't have an account?</a>
+</div>
