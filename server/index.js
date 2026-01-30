@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("./models/User");
 
 const dbName = "csv_dashboard";
 const dbURI = process.env.MONGODB_URI || `mongodb://localhost:27017/${dbName}`;
