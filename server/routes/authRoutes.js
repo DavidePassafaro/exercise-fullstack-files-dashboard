@@ -23,7 +23,7 @@ module.exports = (app) => {
     }
   });
 
-  app.get("/auth/login", async (req, res) => {
+  app.post("/auth/login", async (req, res) => {
     try {
       const { email, password } = req.body;
 
@@ -53,7 +53,7 @@ module.exports = (app) => {
     }
   });
 
-  app.get("/auth/logout", (req, res) => {
+  app.post("/auth/logout", (req, res) => {
     // Clear cookie
     res.clearCookie("token");
     res.status(200).send("User logged out successfully");
