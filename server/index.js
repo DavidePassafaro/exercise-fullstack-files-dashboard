@@ -1,4 +1,5 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 require("./models/User");
 
@@ -17,6 +18,9 @@ const PORT = process.env.PORT || 3000;
 
 // Enable JSON body parsing
 app.use(express.json());
+
+// Enable cookie parsing
+app.use(cookieParser());
 
 // CORS
 app.use((req, res, next) => {
