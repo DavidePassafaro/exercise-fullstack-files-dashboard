@@ -35,6 +35,7 @@ app.use((req, res, next) => {
 
 // Use authentication routes
 require("./routes/authRoutes")(app);
+require("./routes/userRoutes")(app);
 
 // Start the server
 app.listen(PORT, () => {
