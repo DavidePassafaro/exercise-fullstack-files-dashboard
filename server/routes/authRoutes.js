@@ -17,7 +17,7 @@ module.exports = (app) => {
       await user.save();
 
       // Send response
-      res.status(201).send("User created successfully");
+      res.status(201).send({ message: "User created successfully" });
     } catch (error) {
       res.status(500).send("Internal server error");
     }
@@ -30,24 +30,26 @@ module.exports = (app) => {
       // Check if user exists
       const existingUser = await User.findOne({ email });
       if (!existingUser) {
-        return res.status(400).send("User not found");
+        return res.status(400).send({ message: "User not found" });
       }
 
       // Check if password is correct
-      const isPasswordValid = existingUser.comparePassword(password);
+      const isPasswordValid = await existingUser.comparePassword(password);
       if (!isPasswordValid) {
         return res.status(400).send("Invalid password");
       }
 
       // Set cookie (a real app should use JWT)
-      res.cookie("token", existingUser._id, {
+      res.cookie("token", existingUser._id.toString(), {
         httpOnly: true,
-        secure: true,
-        sameSite: "strict",
+        secure: false,
+        sameSite: "lax",
+        path: "/", // Assicura che sia visibile in tutta l'app
+        maxAge: 24 * 60 * 60 * 1000, // 24 ore di validità
       });
 
       // Send response
-      res.status(200).send("User logged in successfully");
+      res.status(200).send({ message: "User logged in successfully" });
     } catch (error) {
       res.status(500).send("Internal server error");
     }
@@ -55,7 +57,12 @@ module.exports = (app) => {
 
   app.post("/auth/logout", (req, res) => {
     // Clear cookie
-    res.clearCookie("token");
-    res.status(200).send("User logged out successfully");
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      path: "/",
+    });
+    res.status(200).send({ message: "User logged out successfully" });
   });
 };
