@@ -1,10 +1,28 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'csv-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [RouterLink],
+  imports: [RouterLink, ReactiveFormsModule],
 })
-export class LoginComponent {}
+export class LoginComponent {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
+  });
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      this.authService.login(this.form.value.email!, this.form.value.password!).subscribe(() => {
+        this.router.navigate(['/dashboard']);
+      });
+    }
+  }
+}

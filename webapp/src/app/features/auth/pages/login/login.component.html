@@ -1,6 +1,17 @@
-Login
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input type="email" formControlName="email" placeholder="Email" />
+
+  <br />
+
+  <input type="password" formControlName="password" placeholder="Password" />
+
+  <br />
+
+  <button type="submit" [disabled]="form.invalid">Signup</button>
+</form>
 
 <br />
 <br />
 
+<p>Don't have an account?</p>
 <button routerLink="/auth/signup">Sign up</button>

@@ -21,7 +21,7 @@ export class SignupComponent {
   onSubmit(): void {
     if (this.form.valid) {
       this.authService.signup(this.form.value.email!, this.form.value.password!).subscribe(() => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/login']);
       });
     }
   }
