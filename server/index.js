@@ -15,6 +15,9 @@ mongoose
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Enable JSON body parsing
+app.use(express.json());
+
 // Use authentication routes
 require("./routes/authRoutes")(app);
 
