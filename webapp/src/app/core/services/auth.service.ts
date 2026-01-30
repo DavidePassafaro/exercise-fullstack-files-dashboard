@@ -18,13 +18,13 @@ export class AuthService {
 
   login(email: string, password: string): Observable<User> {
     return this.http
-      .post(`${this.baseUrl}/auth/login`, { email, password }, { withCredentials: true })
+      .post(`${this.baseUrl}/auth/login`, { email, password })
       .pipe(switchMap(() => this.userService.getUser()));
   }
 
   logout(): Observable<void> {
     return this.http
-      .post<void>(`${this.baseUrl}/auth/logout`, {}, { withCredentials: true })
+      .post<void>(`${this.baseUrl}/auth/logout`, {})
       .pipe(tap(() => window.location.reload()));
   }
 }

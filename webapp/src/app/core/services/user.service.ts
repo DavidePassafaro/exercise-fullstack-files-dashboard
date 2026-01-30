@@ -15,7 +15,7 @@ export class UserService {
 
   getUser(): Observable<User> {
     return this.http
-      .get<User>(`${this.baseUrl}/users/me`, { withCredentials: true })
+      .get<User>(`${this.baseUrl}/users/me`)
       .pipe(tap((user: User) => this._user.set(user)));
   }
 }
