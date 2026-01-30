@@ -4,4 +4,56 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: var(--tertiary-color);
+}
+
+.signup {
+  &__container {
+    background-color: var(--background-color);
+    padding: 2rem;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    & > *:not(:first-child, .signup__error) {
+      margin-top: 1rem;
+    }
+  }
+
+  &__error,
+  &__request-error {
+    color: red;
+
+    p {
+      margin: 0;
+      font-size: 0.875rem;
+    }
+  }
+
+  &__request-error {
+    margin-top: 1rem;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  &__link {
+    margin-top: 1rem;
+    color: var(--primary-text-color);
+    text-decoration: none;
+  }
 }

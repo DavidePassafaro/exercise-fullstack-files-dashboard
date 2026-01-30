@@ -1,17 +1,40 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <input type="email" formControlName="email" placeholder="Email" />
+<div class="signup__container">
+  <h1 class="signup__title">Signup</h1>
 
-  <br />
+  <form class="signup__form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    @let emailControl = form.get('email');
+    <input csv-primary-input type="email" formControlName="email" placeholder="Email" />
+    @if (emailControl?.invalid && emailControl?.touched) {
+      @if (emailControl?.hasError('required')) {
+        <div class="signup__error">
+          <p>* Email is required</p>
+        </div>
+      }
+      @if (emailControl?.hasError('email')) {
+        <div class="signup__error">
+          <p>* Please enter a valid email address</p>
+        </div>
+      }
+    }
 
-  <input type="password" formControlName="password" placeholder="Password" />
+    @let passwordControl = form.get('password');
+    <input csv-primary-input type="password" formControlName="password" placeholder="Password" />
+    @if (passwordControl?.invalid && passwordControl?.touched) {
+      @if (passwordControl?.hasError('required')) {
+        <div class="signup__error">
+          <p>* Password is required</p>
+        </div>
+      }
+    }
 
-  <br />
+    @if (form.hasError('invalid')) {
+      <div class="signup__request-error">
+        <p>Email already exists. Try another one.</p>
+      </div>
+    }
 
-  <button type="submit" [disabled]="form.invalid">Signup</button>
-</form>
+    <button csv-primary-button type="submit" [disabled]="form.invalid">Signup</button>
+  </form>
 
-<br />
-<br />
-
-<p>Do you have an account already?</p>
-<button routerLink="/auth/login">Go to login</button>
+  <a class="signup__link" routerLink="/auth/login">Already have an account? Login</a>
+</div>

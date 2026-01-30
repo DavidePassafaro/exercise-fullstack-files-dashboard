@@ -2,12 +2,15 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
+import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
+import { PrimaryInputComponent } from '../../../../shared/components/primary-input/primary-input.component';
+import { catchError, of, tap } from 'rxjs';
 
 @Component({
   selector: 'csv-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, PrimaryButtonComponent, PrimaryInputComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignupComponent {
@@ -21,9 +24,20 @@ export class SignupComponent {
 
   onSubmit(): void {
     if (this.form.valid) {
-      this.authService.signup(this.form.value.email!, this.form.value.password!).subscribe(() => {
-        this.router.navigate(['/login']);
-      });
+      this.authService
+        .signup(this.form.value.email!, this.form.value.password!)
+        .pipe(
+          tap(() => {
+            // Successfully signed up
+            this.router.navigate(['/login']);
+          }),
+          catchError((error) => {
+            // Failed to sign up
+            this.form.setErrors({ invalid: true });
+            return of(error);
+          }),
+        )
+        .subscribe();
     }
   }
 }
