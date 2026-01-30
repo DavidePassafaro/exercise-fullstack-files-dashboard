@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const User = mongoose.model("users");
 
 module.exports = (app) => {
-  app.get("/user/me", async (req, res) => {
+  app.get("/users/me", async (req, res) => {
     const token = req.cookies?.token;
     if (!token) {
       return res.status(401).send("Unauthorized");
