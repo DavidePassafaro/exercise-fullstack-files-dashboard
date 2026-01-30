@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
 import { PrimaryInputComponent } from '../../../../shared/components/primary-input/primary-input.component';
+import { catchError, of, tap } from 'rxjs';
 
 @Component({
   selector: 'csv-login',
@@ -23,9 +24,20 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.form.valid) {
-      this.authService.login(this.form.value.email!, this.form.value.password!).subscribe(() => {
-        this.router.navigate(['/dashboard']);
-      });
+      this.authService
+        .login(this.form.value.email!, this.form.value.password!)
+        .pipe(
+          tap(() => {
+            // Successfully logged in
+            this.router.navigate(['/dashboard']);
+          }),
+          catchError((error) => {
+            // Failed to log in
+            this.form.setErrors({ invalid: true });
+            return of(error);
+          }),
+        )
+        .subscribe();
     }
   }
 }

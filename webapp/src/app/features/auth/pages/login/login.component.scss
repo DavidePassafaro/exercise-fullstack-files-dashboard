@@ -33,12 +33,21 @@
     }
   }
 
-  &__error {
+  &__error,
+  &__request-error {
     color: red;
 
     p {
       margin: 0;
       font-size: 0.875rem;
+    }
+  }
+
+  &__request-error {
+    margin-top: 1rem;
+
+    p {
+      font-size: 1rem;
     }
   }
 

@@ -27,6 +27,12 @@
       }
     }
 
+    @if (form.hasError('invalid')) {
+      <div class="login__request-error">
+        <p>Invalid email or password. Try again.</p>
+      </div>
+    }
+
     <button csv-primary-button type="submit" [disabled]="form.invalid">Login</button>
   </form>
 
