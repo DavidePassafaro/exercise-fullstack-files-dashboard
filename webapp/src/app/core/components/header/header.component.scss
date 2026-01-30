@@ -1,0 +1,21 @@
+header {
+  display: flex;
+  align-items: center;
+  background-color: var(--primary-color);
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+
+  nav {
+    flex: 1;
+
+    ul {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    a {
+      color: var(--primary-text-color);
+    }
+  }
+}
