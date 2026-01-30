@@ -15,4 +15,9 @@
   &:active {
     background-color: var(--tertiary-color);
   }
+
+  &:disabled {
+    background-color: var(--tertiary-color);
+    cursor: not-allowed;
+  }
 }
