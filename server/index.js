@@ -1,8 +1,12 @@
 const express = require("express");
-const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-require("./models/User");
+const cookieParser = require("cookie-parser");
 
+// Mongoose models
+require("./models/User");
+require("./models/File");
+
+// Database connection
 const dbName = "csv_dashboard";
 const dbURI = process.env.MONGODB_URI || `mongodb://localhost:27017/${dbName}`;
 
@@ -37,9 +41,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// Use authentication routes
+// Routes
 require("./routes/authRoutes")(app);
 require("./routes/userRoutes")(app);
+require("./routes/fileRoutes")(app);
 
 // Start the server
 app.listen(PORT, () => {
