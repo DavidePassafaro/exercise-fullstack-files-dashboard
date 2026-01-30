@@ -28,8 +28,23 @@
     flex-direction: column;
     width: 100%;
 
-    & * {
-      margin-bottom: 1rem;
+    & > *:not(:first-child, .login__error) {
+      margin-top: 1rem;
     }
+  }
+
+  &__error {
+    color: red;
+
+    p {
+      margin: 0;
+      font-size: 0.875rem;
+    }
+  }
+
+  &__link {
+    margin-top: 1rem;
+    color: var(--primary-text-color);
+    text-decoration: none;
   }
 }

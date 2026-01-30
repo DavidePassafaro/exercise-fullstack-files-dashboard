@@ -2,12 +2,33 @@
   <h1 class="login__title">Login</h1>
 
   <form class="login__form" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <input type="email" formControlName="email" placeholder="Email" />
+    @let emailControl = form.get('email');
+    <input csv-primary-input type="email" formControlName="email" placeholder="Email" />
+    @if (emailControl?.invalid && emailControl?.touched) {
+      @if (emailControl?.hasError('required')) {
+        <div class="login__error">
+          <p>* Email is required</p>
+        </div>
+      }
+      @if (emailControl?.hasError('email')) {
+        <div class="login__error">
+          <p>* Please enter a valid email address</p>
+        </div>
+      }
+    }
 
-    <input type="password" formControlName="password" placeholder="Password" />
+    @let passwordControl = form.get('password');
+    <input csv-primary-input type="password" formControlName="password" placeholder="Password" />
+    @if (passwordControl?.invalid && passwordControl?.touched) {
+      @if (passwordControl?.hasError('required')) {
+        <div class="login__error">
+          <p>* Password is required</p>
+        </div>
+      }
+    }
 
-    <button csv-primary-button type="submit" [disabled]="form.invalid">Signup</button>
+    <button csv-primary-button type="submit" [disabled]="form.invalid">Login</button>
   </form>
 
-  <a outerLink="/auth/signup">Don't have an account?</a>
+  <a class="login__link" routerLink="/auth/signup">Don't have an account? Sign up</a>
 </div>

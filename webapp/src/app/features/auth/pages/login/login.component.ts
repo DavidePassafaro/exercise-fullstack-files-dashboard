@@ -3,12 +3,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
 import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
+import { PrimaryInputComponent } from '../../../../shared/components/primary-input/primary-input.component';
 
 @Component({
   selector: 'csv-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [RouterLink, ReactiveFormsModule, PrimaryButtonComponent],
+  imports: [RouterLink, ReactiveFormsModule, PrimaryButtonComponent, PrimaryInputComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
