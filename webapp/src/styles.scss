@@ -6,10 +6,13 @@
   --secondary-color: #4c7ab8;
   --tertiary-color: rgb(125, 165, 218);
 
-  --primary-text-color: #000;
-  --secondary-text-color: #fff;
+  --primary-text-color: #1e293b;
+  --secondary-text-color: #64748b;
+
+  --contrast-text-color: #fff;
 
   --background-color: #fff;
+  --border-color: #e2e8f0;
 }
 
 body {
@@ -164,6 +167,7 @@ body {
   left: 0;
   top: 0;
   font-size: 100%;
+  color: var(--primary-text-color);
 }
 
 /* ROOT FONT STYLES */
