@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { catchError, of, tap } from 'rxjs';
-import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
 import { FileService } from '../../../../core/services/file.service';
 
 @Component({
@@ -8,7 +7,6 @@ import { FileService } from '../../../../core/services/file.service';
   templateUrl: './upload-file-button.component.html',
   styleUrls: ['./upload-file-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [PrimaryButtonComponent],
 })
 export class UploadFileButtonComponent {
   private fileService = inject(FileService);
