@@ -1,0 +1,24 @@
+<div
+  class="user-dropdown__container"
+  (click)="toggleDropdown()"
+  csvClickOutside
+  (onOutsideClick)="toggleDropdown()"
+>
+  <div class="user-dropdown__initials">
+    <span>{{ user().name | initials }}</span>
+  </div>
+
+  <span class="user-dropdown__name">{{ user().name }}</span>
+
+  <div class="user-dropdown__arrow">
+    <i class="csv-icon">
+      {{ !isOpen() ? 'chevron-down' : 'chevron-up' }}
+    </i>
+  </div>
+
+  @if (isOpen()) {
+    <div class="user-dropdown__menu">
+      <button class="user-dropdown__menu-item" (click)="onLogoutClick()">Logout</button>
+    </div>
+  }
+</div>
