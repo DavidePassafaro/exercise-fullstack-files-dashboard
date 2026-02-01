@@ -11,8 +11,16 @@
 }
 
 .header {
-  text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+  }
 
   h1 {
     font-weight: 700;
@@ -22,5 +30,6 @@
   p {
     color: var(--secondary-text-color);
     font-size: 1.1rem;
+    margin-bottom: 1rem;
   }
 }

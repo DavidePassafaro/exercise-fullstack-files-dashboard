@@ -1,8 +1,21 @@
 <div class="dashboard-content">
-  <div class="header">
-    <h1>CSV Dataset Upload</h1>
-    <p>Upload your data to start analyzing and visualizing.</p>
-  </div>
+  @if (files().length === 0) {
+    <div class="header">
+      <h1>CSV Dataset Upload</h1>
+      <p>Upload your data to start analyzing and visualizing.</p>
+    </div>
 
-  <csv-upload-file />
+    <csv-upload-file />
+  } @else {
+    <div class="header">
+      <div class="header__title">
+        <h1>Your Files</h1>
+        <p>Select a file to analyze and visualize.</p>
+      </div>
+
+      <csv-upload-file-button />
+    </div>
+
+    <csv-file-list [files]="files()" [isClickable]="true" (removeFile)="onRemoveFile($event)" />
+  }
 </div>
