@@ -1,4 +1,6 @@
+import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
+import { FileService } from '../../core/services/file.service';
 
 export const routes: Routes = [
   {
@@ -11,6 +13,9 @@ export const routes: Routes = [
         title: 'Dashboard',
         data: {
           breadcrumbs: '',
+        },
+        resolve: {
+          files: () => inject(FileService).getFiles(),
         },
       },
       {
