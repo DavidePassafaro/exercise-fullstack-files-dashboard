@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const fileSchema = new mongoose.Schema({
   originalName: String,
+  name: String,
+  size: Number,
   storagePath: String,
   uploadDate: { type: Date, default: Date.now },
   columnConfigs: [

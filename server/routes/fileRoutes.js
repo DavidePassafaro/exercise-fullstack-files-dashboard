@@ -39,6 +39,8 @@ module.exports = (app) => {
       const savedFiles = await Promise.all(
         req.files.map((f) => {
           const newFile = new File({
+            name: f.originalname,
+            size: f.size,
             originalName: f.originalname,
             storagePath: f.path,
             owner: user.id,
