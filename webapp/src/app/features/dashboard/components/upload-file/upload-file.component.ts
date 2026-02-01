@@ -1,16 +1,14 @@
-import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { BASE_URL } from '../../../../shared/models/base-url';
-import { FileSizePipe } from '../../../../shared/pipes/file-size.pipe';
 import { FileService } from '../../../../core/services/file.service';
 import { catchError, of, tap } from 'rxjs';
+import { FileListComponent } from '../file-list/file-list.component';
 
 @Component({
   selector: 'csv-upload-file',
   templateUrl: './upload-file.component.html',
   styleUrls: ['./upload-file.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FileSizePipe],
+  imports: [FileListComponent],
 })
 export class UploadFileComponent {
   private fileService = inject(FileService);
