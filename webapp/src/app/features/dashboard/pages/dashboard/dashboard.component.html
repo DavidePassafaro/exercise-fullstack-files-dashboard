@@ -16,8 +16,13 @@
       <csv-upload-file-button />
     </div>
 
-    @for (file of files(); track $index) {
-      <csv-file-card [name]="file.name" [size]="file.size" (removeFile)="onRemoveFile($index)" />
-    }
+    <cdk-virtual-scroll-viewport itemSize="88" class="dashboard-file-list">
+      <csv-file-card
+        *cdkVirtualFor="let file of files(); let i = index; trackBy: trackByFn"
+        [name]="file.name"
+        [size]="file.size"
+        (removeFile)="onRemoveFile(i)"
+      />
+    </cdk-virtual-scroll-viewport>
   }
 </div>

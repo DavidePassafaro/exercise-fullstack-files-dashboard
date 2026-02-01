@@ -1,15 +1,17 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { UploadFileComponent } from '../../components/upload-file/upload-file.component';
 import { FileService } from '../../../../core/services/file.service';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { UploadFileButtonComponent } from '../../components/upload-file-button/upload-file-button.component';
 import { FileCardComponent } from '../../components/file-card/file-card.component';
+import { UploadedFile } from '../../../../shared/models/uploaded-file';
 
 @Component({
   selector: 'csv-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [UploadFileComponent, FileCardComponent, UploadFileButtonComponent],
+  imports: [UploadFileComponent, FileCardComponent, UploadFileButtonComponent, ScrollingModule],
 })
 export class DashboardComponent {
   private fileService = inject(FileService);
@@ -20,5 +22,9 @@ export class DashboardComponent {
     if (confirm('Are you sure you want to delete this file?')) {
       this.fileService.deleteFile(this.files()[fileIndex]._id).subscribe();
     }
+  }
+
+  trackByFn(index: number, item: UploadedFile) {
+    return item._id;
   }
 }

@@ -42,3 +42,13 @@
     margin-bottom: 1rem;
   }
 }
+
+.dashboard-file-list {
+  height: calc(100vh - 250px);
+  display: block;
+}
+
+csv-file-card {
+  display: block;
+  box-sizing: border-box;
+}
