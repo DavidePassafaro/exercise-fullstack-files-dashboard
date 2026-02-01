@@ -1,0 +1,8 @@
+<button class="upload-btn" (click)="uploadFile()">
+  @if (isUploading()) {
+    <span class="spinner"></span>
+    Uploading...
+  } @else {
+    <span>Upload More Files</span>
+  }
+</button>
