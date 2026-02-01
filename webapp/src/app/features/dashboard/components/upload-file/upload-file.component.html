@@ -35,7 +35,11 @@
         <button class="clear-all" (click)="selectedFiles.set([])">Clear all</button>
       </div>
 
-      <csv-file-list [files]="selectedFiles()" (removeFile)="removeFile($event)" />
+      <div class="file-list">
+        @for (file of selectedFiles(); track $index) {
+          <csv-file-card [name]="file.name" [size]="file.size" (removeFile)="removeFile($index)" />
+        }
+      </div>
 
       <div class="actions">
         <button class="upload-btn" [disabled]="isUploading()" (click)="handleMultipleUpload()">

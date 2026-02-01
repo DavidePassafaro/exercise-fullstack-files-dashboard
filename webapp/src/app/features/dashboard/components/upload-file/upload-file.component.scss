@@ -79,6 +79,10 @@
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
   border: 1px solid #f1f5f9;
   animation: slideUp 0.4s ease-out;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
 
 .file-list-header {
@@ -113,9 +117,16 @@
   }
 }
 
+.file-list {
+  overflow-y: auto;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
+  position: sticky;
+  bottom: 0;
+  padding-top: 1rem;
 }
 
 .upload-btn {

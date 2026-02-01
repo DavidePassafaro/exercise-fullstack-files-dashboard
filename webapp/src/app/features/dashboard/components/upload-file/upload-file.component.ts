@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FileService } from '../../../../core/services/file.service';
 import { catchError, of, tap } from 'rxjs';
-import { FileListComponent } from '../file-list/file-list.component';
+import { FileCardComponent } from '../file-card/file-card.component';
 
 @Component({
   selector: 'csv-upload-file',
   templateUrl: './upload-file.component.html',
   styleUrls: ['./upload-file.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FileListComponent],
+  imports: [FileCardComponent],
 })
 export class UploadFileComponent {
   private fileService = inject(FileService);
