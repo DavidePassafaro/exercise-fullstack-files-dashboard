@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { isAuthenticatedGuard, isNotAuthenticatedGuard } from './shared/guards/auth.guard';
+import { isAuthenticatedGuard, isNotAuthenticatedGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
