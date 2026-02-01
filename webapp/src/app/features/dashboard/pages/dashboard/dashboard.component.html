@@ -1,6 +1,6 @@
 <div class="dashboard-content">
   @if (files().length === 0) {
-    <div class="header">
+    <div class="upload-header">
       <h1>CSV Dataset Upload</h1>
       <p>Upload your data to start analyzing and visualizing.</p>
     </div>
@@ -16,6 +16,8 @@
       <csv-upload-file-button />
     </div>
 
-    <csv-file-list [files]="files()" [isClickable]="true" (removeFile)="onRemoveFile($event)" />
+    @for (file of files(); track $index) {
+      <csv-file-card [name]="file.name" [size]="file.size" (removeFile)="onRemoveFile($index)" />
+    }
   }
 </div>
