@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { BASE_URL } from '../../../../shared/models/base-url';
 import { FileSizePipe } from '../../../../shared/pipes/file-size.pipe';
+import { FileService } from '../../../../core/services/file.service';
+import { catchError, of, tap } from 'rxjs';
 
 @Component({
   selector: 'csv-upload-file',
@@ -11,8 +13,7 @@ import { FileSizePipe } from '../../../../shared/pipes/file-size.pipe';
   imports: [FileSizePipe],
 })
 export class UploadFileComponent {
-  private http = inject(HttpClient);
-  private baseUrl = inject(BASE_URL);
+  private fileService = inject(FileService);
 
   selectedFiles = signal<File[]>([]);
   isDragOver = signal(false);
@@ -71,19 +72,22 @@ export class UploadFileComponent {
     this.isUploading.set(true);
     const formData = new FormData();
     files.forEach((file) => formData.append('files', file));
-    formData.append('columnConfigs', JSON.stringify([]));
 
-    this.http.post(`${this.baseUrl}/files/upload`, formData).subscribe({
-      next: (res) => {
-        alert('File uploaded successfully!');
-        this.selectedFiles.set([]);
-        this.isUploading.set(false);
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Error during file upload.');
-        this.isUploading.set(false);
-      },
-    });
+    this.fileService
+      .uploadFile(files)
+      .pipe(
+        tap(() => {
+          alert('File uploaded successfully!');
+          this.selectedFiles.set([]);
+          this.isUploading.set(false);
+        }),
+        catchError((err) => {
+          console.error(err);
+          alert('Error during file upload.');
+          this.isUploading.set(false);
+          return of(null);
+        }),
+      )
+      .subscribe();
   }
 }
