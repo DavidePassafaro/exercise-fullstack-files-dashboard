@@ -1,0 +1,15 @@
+.csv-notification-icon {
+  &__container {
+    position: relative;
+  }
+
+  &__badge {
+    position: absolute;
+    top: 0.2rem;
+    left: 1.2rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: #ff0000;
+    border-radius: 50%;
+  }
+}

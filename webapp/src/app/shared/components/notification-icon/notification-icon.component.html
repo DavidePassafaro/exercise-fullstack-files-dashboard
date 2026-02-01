@@ -1,0 +1,9 @@
+<div class="csv-notification-icon__container">
+  <i class="csv-icon">
+    <ng-content></ng-content>
+  </i>
+
+  @if (hasNotification()) {
+    <span class="csv-notification-icon__badge"></span>
+  }
+</div>
