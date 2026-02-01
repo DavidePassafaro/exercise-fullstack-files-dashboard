@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
+import { NotificationIconComponent } from '../../../shared/components/notification-icon/notification-icon.component';
+import { UserService } from '../../services/user.service';
 
 interface Breadcrumb {
   label: string;
@@ -13,20 +15,26 @@ interface Breadcrumb {
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [RouterLink, NotificationIconComponent],
 })
 export class HeaderComponent {
   private authService = inject(AuthService);
+  private userService = inject(UserService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
 
   protected breadcrumbs = signal<Breadcrumb[]>([]);
+  protected isAuthenticated = computed(() => !!this.userService.user());
 
   ngOnInit(): void {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       const breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);
       this.breadcrumbs.set(breadcrumbs);
     });
+  }
+
+  onNotificationClick(): void {
+    alert('Feature not implemented');
   }
 
   onUserClick(): void {
@@ -50,7 +58,7 @@ export class HeaderComponent {
         url += `/${routeURL}`;
       }
 
-      const label = child.snapshot.title;
+      const label = child.snapshot.data?.['breadcrumbs'];
       if (label) {
         breadcrumbs.push({ label, url });
       }
