@@ -1,0 +1,16 @@
+<div class="file-card">
+  <div class="file-info">
+    <div class="file-icon">
+      <i class="csv-icon">file-text</i>
+    </div>
+
+    <div class="file-details">
+      <span class="file-name">{{ name() }}</span>
+      <span class="file-size">{{ size() | fileSize }}</span>
+    </div>
+  </div>
+
+  <button class="remove-btn" (click)="onRemoveFile(); $event.stopPropagation()">
+    <i class="csv-icon">remove</i>
+  </button>
+</div>
