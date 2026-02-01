@@ -22,6 +22,10 @@ export class UserDropdownComponent {
     this.isOpen.set(!this.isOpen());
   }
 
+  closeDropdown() {
+    this.isOpen.set(false);
+  }
+
   onLogoutClick() {
     this.authService.logout().subscribe();
   }

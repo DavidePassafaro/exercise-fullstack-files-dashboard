@@ -2,7 +2,7 @@
   class="user-dropdown__container"
   (click)="toggleDropdown()"
   csvClickOutside
-  (onOutsideClick)="toggleDropdown()"
+  (onOutsideClick)="closeDropdown()"
 >
   <div class="user-dropdown__initials">
     <span>{{ user().name | initials }}</span>

@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/rout
 import { filter } from 'rxjs';
 import { NotificationIconComponent } from '../../../shared/components/notification-icon/notification-icon.component';
 import { UserService } from '../../services/user.service';
+import { UserDropdownComponent } from '../user-dropdown/user-dropdown.component';
 
 interface Breadcrumb {
   label: string;
@@ -15,16 +16,16 @@ interface Breadcrumb {
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, NotificationIconComponent],
+  imports: [RouterLink, NotificationIconComponent, UserDropdownComponent],
 })
 export class HeaderComponent {
-  private authService = inject(AuthService);
   private userService = inject(UserService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
 
   protected breadcrumbs = signal<Breadcrumb[]>([]);
-  protected isAuthenticated = computed(() => !!this.userService.user());
+  protected user = this.userService.user;
+  protected isAuthenticated = computed(() => !!this.user());
 
   ngOnInit(): void {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
@@ -35,10 +36,6 @@ export class HeaderComponent {
 
   onNotificationClick(): void {
     alert('Feature not implemented');
-  }
-
-  onUserClick(): void {
-    this.authService.logout().subscribe();
   }
 
   private createBreadcrumbs(
