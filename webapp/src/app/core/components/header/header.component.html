@@ -1,27 +1,25 @@
 <header class="d-flex">
-  <!-- Logo -->
-  <div>📄</div>
+  <i class="csv-icon">file-text</i>
 
   <!-- Breadcrumb -->
   <nav>
     <ul>
-      <li>
-        <a href="">Dashboard</a>
-      </li>
-      <li>
-        <a href="">File upload - Preview</a>
-      </li>
+      @for (breadcrumb of breadcrumbs(); track breadcrumb.label; let last = $last) {
+        <li>
+          <a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
+        </li>
+        @if (!last) {
+          <span>/</span>
+        }
+      }
     </ul>
   </nav>
 
-  <!-- Bell -->
-  <div>🔔</div>
+  <i class="csv-icon">bell-plus</i>
 
-  <!-- Inbox -->
-  <div>📥</div>
+  <i class="csv-icon">wallet-cards</i>
 
-  <!-- Messages -->
-  <div>💬</div>
+  <i class="csv-icon">mail</i>
 
   <!-- User -->
   <button (click)="onUserClick()">👤</button>
