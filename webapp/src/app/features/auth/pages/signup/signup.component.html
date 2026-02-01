@@ -2,6 +2,16 @@
   <h1 class="signup__title">Signup</h1>
 
   <form class="signup__form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    @let nameControl = form.get('name');
+    <input csv-primary-input type="text" formControlName="name" placeholder="Name" />
+    @if (nameControl?.invalid && nameControl?.touched) {
+      @if (nameControl?.hasError('required')) {
+        <div class="signup__error">
+          <p>* Name is required</p>
+        </div>
+      }
+    }
+
     @let emailControl = form.get('email');
     <input csv-primary-input type="email" formControlName="email" placeholder="Email" />
     @if (emailControl?.invalid && emailControl?.touched) {

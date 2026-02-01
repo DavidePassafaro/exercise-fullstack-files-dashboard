@@ -18,6 +18,7 @@ export class SignupComponent {
   private router = inject(Router);
 
   form = new FormGroup({
+    name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
@@ -25,7 +26,7 @@ export class SignupComponent {
   onSubmit(): void {
     if (this.form.valid) {
       this.authService
-        .signup(this.form.value.email!, this.form.value.password!)
+        .signup(this.form.value.name!, this.form.value.email!, this.form.value.password!)
         .pipe(
           tap(() => {
             // Successfully signed up

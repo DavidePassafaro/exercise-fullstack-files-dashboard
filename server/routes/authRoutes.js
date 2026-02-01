@@ -4,7 +4,7 @@ const User = mongoose.model("users");
 module.exports = (app) => {
   app.post("/auth/signup", async (req, res) => {
     try {
-      const { email, password } = req.body;
+      const { name, email, password } = req.body;
 
       // Check if user exists
       const existingUser = await User.findOne({ email });
@@ -13,7 +13,7 @@ module.exports = (app) => {
       }
 
       // Create new user
-      const user = new User({ email, password });
+      const user = new User({ name, email, password });
       await user.save();
 
       // Send response

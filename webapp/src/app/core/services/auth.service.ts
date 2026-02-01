@@ -12,8 +12,8 @@ export class AuthService {
 
   private userService = inject(UserService);
 
-  signup(email: string, password: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/auth/signup`, { email, password });
+  signup(name: string, email: string, password: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/auth/signup`, { name, email, password });
   }
 
   login(email: string, password: string): Observable<User> {
