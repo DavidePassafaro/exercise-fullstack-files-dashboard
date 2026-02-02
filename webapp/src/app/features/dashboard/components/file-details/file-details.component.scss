@@ -1,0 +1,46 @@
+.file-details {
+  $details-padding-left: 1rem;
+  $details-font-size: 0.8rem;
+
+  &__header {
+    display: flex;
+    background-color: var(--background-secondary-color);
+    padding: 1rem;
+  }
+
+  &__header-icon {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+  }
+
+  &__header-content {
+    flex: 1;
+  }
+
+  &__header-title {
+    font-size: 1rem;
+    font-weight: bold;
+    padding-left: $details-padding-left;
+  }
+
+  &__header-divider {
+    border: 0;
+    border-top: 1px solid var(--border-color);
+  }
+
+  &__file-info {
+    display: flex;
+    gap: 1rem;
+    padding-left: $details-padding-left;
+  }
+
+  &__file-info-labels {
+    color: var(--secondary-text-color);
+    font-size: $details-font-size;
+  }
+
+  &__file-info-values {
+    font-size: $details-font-size;
+    font-weight: bold;
+  }
+}
