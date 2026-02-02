@@ -1,11 +1,20 @@
 const mongoose = require("mongoose");
 
 const fileSchema = new mongoose.Schema({
-  originalName: String,
   name: String,
+  originalName: String,
+  type: {
+    type: String,
+    enum: ["csv"],
+    default: "csv",
+  },
   size: Number,
-  storagePath: String,
   uploadDate: { type: Date, default: Date.now },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
+  storagePath: String,
   columnConfigs: [
     {
       columnName: String,
@@ -16,10 +25,6 @@ const fileSchema = new mongoose.Schema({
       },
     },
   ],
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
-  },
 });
 
 mongoose.model("files", fileSchema);

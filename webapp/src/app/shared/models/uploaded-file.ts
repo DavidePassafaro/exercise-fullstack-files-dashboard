@@ -2,13 +2,14 @@ import { User } from './user';
 
 export interface UploadedFile {
   _id: string;
-  originalName: string;
   name: string;
+  originalName: string;
+  type: 'csv';
   size: number;
-  storagePath: string;
   uploadDate: Date;
-  columnConfigs: ColumnConfig[];
   owner: User;
+  storagePath: string;
+  columnConfigs: ColumnConfig[];
 }
 
 interface ColumnConfig {

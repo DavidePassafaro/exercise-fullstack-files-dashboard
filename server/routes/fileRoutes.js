@@ -1,9 +1,9 @@
+const path = require("path");
+const multer = require("multer");
+const { fileTypeFromFile } = require("file-type");
 const mongoose = require("mongoose");
 const File = mongoose.model("files");
 const User = mongoose.model("users");
-
-const multer = require("multer");
-const path = require("path");
 
 // Multer configuration
 const storage = multer.diskStorage({
@@ -18,6 +18,32 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
+// File Type utility function
+const getFileType = async (file) => {
+  const typeInfo = await fileTypeFromFile(file.path);
+  const extension = path.extname(file.originalname).toLowerCase();
+
+  const excelMimes = [
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/vnd.ms-excel",
+    "application/x-cfb",
+  ];
+
+  if (typeInfo && excelMimes.includes(typeInfo.mime)) {
+    return "excel";
+  }
+
+  if (extension === ".csv" || file.mimetype === "text/csv") {
+    return "csv";
+  }
+
+  if (extension === ".xlsx" || extension === ".xls") {
+    return "excel";
+  }
+
+  return "unknown";
+};
 
 module.exports = (app) => {
   app.post("/files/upload", upload.array("files", 10), async (req, res) => {
@@ -37,11 +63,12 @@ module.exports = (app) => {
       }
 
       const savedFiles = await Promise.all(
-        req.files.map((f) => {
+        req.files.map(async (f) => {
           const newFile = new File({
             name: f.originalname,
-            size: f.size,
             originalName: f.originalname,
+            type: await getFileType(f),
+            size: f.size,
             storagePath: f.path,
             owner: user.id,
             columnConfigs: [],
