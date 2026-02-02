@@ -1,1 +1,5 @@
-<h1>CSV Detail</h1>
+@if (file()) {
+  <csv-file-details [file]="file()!" />
+} @else {
+  <p>File not found</p>
+}
