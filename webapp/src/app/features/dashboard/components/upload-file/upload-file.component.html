@@ -14,14 +14,14 @@
 
       <div class="text-container">
         <span class="main-text">Click to upload or drag & drop</span>
-        <span class="sub-text">Only .csv files supported (max 10 files)</span>
+        <span class="sub-text">Only .csv and .xlsx files supported (max 10 files)</span>
       </div>
     </div>
 
     <input
       type="file"
       #fileInput
-      accept=".csv"
+      accept=".csv,.xlsx"
       class="hidden-input"
       multiple
       (change)="onFileSelected($event)"

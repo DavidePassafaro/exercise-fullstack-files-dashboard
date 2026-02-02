@@ -17,7 +17,7 @@ export class UploadFileButtonComponent {
     // trigger csv file upload
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
-    fileInput.accept = '.csv';
+    fileInput.accept = '.csv,.xlsx';
     fileInput.multiple = true;
     fileInput.click();
 
@@ -31,7 +31,7 @@ export class UploadFileButtonComponent {
 
   handleMultipleUpload(files: FileList) {
     if (files.length === 0) {
-      alert('Select at least one .csv file');
+      alert('Select at least one .csv or .xlsx file');
       return;
     }
 

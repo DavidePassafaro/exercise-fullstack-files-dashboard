@@ -75,7 +75,7 @@ const getFileType = async (file) => {
   ];
 
   if (typeInfo && excelMimes.includes(typeInfo.mime)) {
-    return "excel";
+    return "xlsx";
   }
 
   if (extension === ".csv" || file.mimetype === "text/csv") {
@@ -83,7 +83,7 @@ const getFileType = async (file) => {
   }
 
   if (extension === ".xlsx" || extension === ".xls") {
-    return "excel";
+    return "xlsx";
   }
 
   return "unknown";

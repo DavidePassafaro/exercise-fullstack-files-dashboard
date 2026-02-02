@@ -5,7 +5,7 @@ const fileSchema = new mongoose.Schema({
   originalName: String,
   type: {
     type: String,
-    enum: ["csv"],
+    enum: ["csv", "xlsx"],
     default: "csv",
   },
   size: Number,
