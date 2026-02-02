@@ -120,3 +120,12 @@ Non escludo che ci siano configurazioni più efficienti, tuttavia, ho cercato di
    - Il parsing dei file avviene in memoria. File estremamente pesanti potrebbero richiedere ottimizzazioni tramite streaming.
 4. **State Management:**
    - In previsione di crescita del progetto, sarebbe opportuno implementare una soluzione di state management più robusta, come NgRx. Questa, permetterebbe di gestire lo stato globale dell'applicazione in modo più efficiente e scalabile, oltre a fornire strumenti per la gestione degli effetti collaterali e la gestione degli errori. Una webapp con molte entità e interazioni tra di esse, come cambio di permessi e collaborazione real time (mediante websocket), beneficerebbe enormemente di una soluzione di state management centralizzata.
+
+## Requisiti extra
+
+- ✅ Supporto formati file aggiuntivi (es. Excel)
+- ✅ Upload simultaneo di più file
+- ❌ Gestione di file di grandi dimensioni (~10-20GB), adottando soluzioni architetturali adeguate
+- ❌ Autenticazione e autorizzazione utenti, gestione visibilità dei file in base ai permessi dell’utente.
+- ✅ Riconoscimento automatico tipologia colonne
+- ❌ Collaborative editing: aggiornamenti in tempo reale tra utenti in sessioni diverse e la possibilità di effettuare modifiche realtime
