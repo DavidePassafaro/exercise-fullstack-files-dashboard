@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  linkedSignal,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FileService } from '../../../../core/services/file.service';
 import { FileDetailsComponent } from '../../components/file-details/file-details.component';
@@ -33,13 +40,26 @@ export class FilePreviewComponent {
       .find((file) => file._id === this.route.snapshot.paramMap.get('id')),
   );
 
-  columnConfigs = linkedSignal(() => this.file()?.columnConfigs || []);
+  private originalColumnConfigs: UploadedFileColumn[] = [];
+  protected columnConfigs = linkedSignal(() => {
+    const config = this.file()?.columnConfigs || [];
+    this.originalColumnConfigs = [...config.map((c) => ({ ...c }))];
+    return config;
+  });
+
+  protected isSaving = signal(false);
+  protected hasChanges = signal(false);
 
   loadMore(): void {
     alert('Feature not implemented');
   }
 
   onDataTypeChange(event: string, column: UploadedFileColumn): void {
+    if (event === column.dataType) {
+      return;
+    }
+
+    this.hasChanges.set(true);
     this.columnConfigs.update((columns) => {
       const index = columns.findIndex((c) => c.columnName === column.columnName);
       if (index !== -1) {
@@ -50,10 +70,26 @@ export class FilePreviewComponent {
   }
 
   saveColumnConfigsChanges(): void {
-    alert('Feature not implemented');
+    this.isSaving.set(true);
+
+    this.fileService
+      .updateFile(this.file()!._id, { columnConfigs: this.columnConfigs() })
+      .subscribe({
+        next: () => {
+          alert('Column configs saved successfully');
+        },
+        error: (error) => {
+          alert('Failed to save column configs');
+        },
+        complete: () => {
+          this.isSaving.set(false);
+          this.hasChanges.set(false);
+        },
+      });
   }
 
   cancelColumnConfigsChanges(): void {
-    alert('Feature not implemented');
+    this.columnConfigs.set(this.originalColumnConfigs);
+    this.hasChanges.set(false);
   }
 }

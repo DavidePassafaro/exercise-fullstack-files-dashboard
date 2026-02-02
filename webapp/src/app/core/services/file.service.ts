@@ -41,7 +41,7 @@ export class FileService {
     );
   }
 
-  updateFile(id: string, file: UploadedFile): Observable<UploadedFile> {
+  updateFile(id: string, file: Partial<UploadedFile>): Observable<UploadedFile> {
     return this.http.put<UploadedFile>(`${this.baseUrl}/files/${id}`, file).pipe(
       tap((file) => {
         this.files.update((prev) => {
