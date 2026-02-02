@@ -102,11 +102,31 @@ const getFileColumns = async (filePath, type) => {
     const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
     const headers = json[0] || [];
 
+    const filePreview = getFilePreview(filePath);
+
     // Map headers to schema format
-    return headers.map((colName) => ({
-      columnName: String(colName),
-      dataType: "text",
-    }));
+    return headers.map((colName) => {
+      let dataType = "text";
+      const firstValidRow = filePreview.find((row) => row[colName] !== "");
+
+      if (firstValidRow) {
+        const value = firstValidRow[colName];
+
+        if (!isNaN(value) && !isNaN(parseFloat(value))) {
+          dataType = "number";
+        } else if (
+          !isNaN(Date.parse(value.split("/").reverse().join("-"))) ||
+          /^\d{2}\/\d{2}\/\d{4}$/.test(value)
+        ) {
+          dataType = "date";
+        }
+      }
+
+      return {
+        columnName: String(colName),
+        dataType,
+      };
+    });
   } catch (error) {
     console.error("Error during column parsing:", error);
     return [];
@@ -114,8 +134,8 @@ const getFileColumns = async (filePath, type) => {
 };
 
 // Get File Preview utility function
-const getFilePreview = (req) => {
-  const workbook = XLSX.readFile(req.targetFile.storagePath);
+const getFilePreview = (filePath) => {
+  const workbook = XLSX.readFile(filePath);
   const firstSheetName = workbook.SheetNames[0];
   const worksheet = workbook.Sheets[firstSheetName];
 
@@ -178,7 +198,7 @@ module.exports = (app) => {
     async (req, res) => {
       try {
         const fileResponse = req.targetFile.toObject();
-        fileResponse.preview = getFilePreview(req);
+        fileResponse.preview = getFilePreview(req.targetFile.storagePath);
 
         res.json(fileResponse);
       } catch (error) {
@@ -200,7 +220,7 @@ module.exports = (app) => {
         );
 
         const fileResponse = updatedFile.toObject();
-        fileResponse.preview = getFilePreview(req);
+        fileResponse.preview = getFilePreview(updatedFile.storagePath);
 
         res.json(fileResponse);
       } catch (error) {
