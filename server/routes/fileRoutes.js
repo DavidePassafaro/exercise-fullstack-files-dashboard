@@ -1,11 +1,10 @@
 const path = require("path");
-const multer = require("multer");
-const { fileTypeFromFile } = require("file-type");
 const mongoose = require("mongoose");
 const File = mongoose.model("files");
 const User = mongoose.model("users");
 
 // Multer configuration
+const multer = require("multer");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -64,6 +63,7 @@ const requireFileExistenceAndOwnership = async (req, res, next) => {
 };
 
 // File Type utility function
+const { fileTypeFromFile } = require("file-type");
 const getFileType = async (file) => {
   const typeInfo = await fileTypeFromFile(file.path);
   const extension = path.extname(file.originalname).toLowerCase();
@@ -89,6 +89,30 @@ const getFileType = async (file) => {
   return "unknown";
 };
 
+// Get File Columns utility function
+const XLSX = require("xlsx");
+const getFileColumns = async (filePath, type) => {
+  try {
+    const workbook = XLSX.readFile(filePath);
+    // Get first sheet name
+    const firstSheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[firstSheetName];
+
+    // Get first row (header)
+    const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    const headers = json[0] || [];
+
+    // Map headers to schema format
+    return headers.map((colName) => ({
+      columnName: String(colName),
+      dataType: "text",
+    }));
+  } catch (error) {
+    console.error("Error during column parsing:", error);
+    return [];
+  }
+};
+
 module.exports = (app) => {
   app.post(
     "/files/upload",
@@ -109,7 +133,7 @@ module.exports = (app) => {
               size: f.size,
               storagePath: f.path,
               owner: req.user.id,
-              columnConfigs: [],
+              columnConfigs: await getFileColumns(f.path, await getFileType(f)),
             });
             return newFile.save();
           }),
