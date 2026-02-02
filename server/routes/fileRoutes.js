@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs").promises;
 const mongoose = require("mongoose");
 const File = mongoose.model("files");
 const User = mongoose.model("users");
@@ -235,6 +236,15 @@ module.exports = (app) => {
     requireFileExistenceAndOwnership,
     async (req, res) => {
       try {
+        const absolutePath = path.join(
+          process.cwd(),
+          req.targetFile.storagePath,
+        );
+
+        await fs.unlink(absolutePath).catch((error) => {
+          console.error("Error deleting file:", error);
+        });
+
         const deletedFile = await File.findByIdAndDelete(req.params.id);
         res.json(deletedFile);
       } catch (error) {
