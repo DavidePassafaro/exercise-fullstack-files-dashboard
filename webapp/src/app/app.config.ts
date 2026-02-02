@@ -23,6 +23,6 @@ export const appConfig: ApplicationConfig = {
       return userService.getUser().pipe(catchError(() => of(null)));
     }),
 
-    { provide: BASE_URL, useValue: 'http://localhost:3000' },
+    { provide: BASE_URL, useValue: 'http://localhost:4000' },
   ],
 };

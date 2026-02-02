@@ -18,7 +18,7 @@ mongoose
 
 // Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 // Enable JSON body parsing
 app.use(express.json());
@@ -28,7 +28,7 @@ app.use(cookieParser());
 
 // CORS
 app.use((req, res, next) => {
-  const allowedOrigin = "http://localhost:4200";
+  const allowedOrigin = process.env.ALLOWED_ORIGIN || "http://localhost:4200";
   res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");

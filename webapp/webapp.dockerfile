@@ -21,7 +21,7 @@ FROM nginx:alpine AS runner
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy nginx config
-COPY webapp/nginx.conf /etc/nginx/http.d/default.conf
+COPY webapp/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy built app from builder
 COPY --from=builder /webapp/dist/csv-dashboard/browser /usr/share/nginx/html
