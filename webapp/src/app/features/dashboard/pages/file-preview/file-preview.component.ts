@@ -4,13 +4,14 @@ import { FileService } from '../../../../core/services/file.service';
 import { FileDetailsComponent } from '../../components/file-details/file-details.component';
 import { DataLayoutComponent } from '../../components/data-layout/data-layout.component';
 import { TitleCasePipe } from '@angular/common';
+import { DataTypeSelectorComponent } from '../../components/data-type-selector/data-type-selector.component';
 
 @Component({
   selector: 'csv-file-preview',
   templateUrl: './file-preview.component.html',
   styleUrls: ['./file-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FileDetailsComponent, DataLayoutComponent, TitleCasePipe],
+  imports: [FileDetailsComponent, DataLayoutComponent, DataTypeSelectorComponent],
 })
 export class FilePreviewComponent {
   private route = inject(ActivatedRoute);

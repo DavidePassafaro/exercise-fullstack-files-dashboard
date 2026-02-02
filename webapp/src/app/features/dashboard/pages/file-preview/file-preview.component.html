@@ -23,7 +23,9 @@
             @if (column.columnName === 'ID') {
               <th>ID</th>
             } @else {
-              <th>{{ column.dataType | titlecase }}</th>
+              <th>
+                <csv-data-type-selector [(selectedType)]="column.dataType" />
+              </th>
             }
           }
         </tr>
