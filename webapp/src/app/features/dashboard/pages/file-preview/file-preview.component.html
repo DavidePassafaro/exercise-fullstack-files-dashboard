@@ -8,69 +8,71 @@
     [description]="'Show first 5 rows of the file.'"
   >
     <div class="file-preview__data-layout-content">
-      <table class="file-preview__table">
-        <thead>
-          <tr class="file-preview__table-data-types">
-            <th [attr.colspan]="2">Assign Column Types</th>
-            @for (column of columnConfigs(); track column._id) {
-              @if (column.columnName !== 'ID') {
-                <th>{{ column.columnName }}</th>
-              }
-            }
-          </tr>
-
-          <tr class="file-preview__table-data-names">
-            <th class="file-preview__table-data-row-number"></th>
-            @for (column of columnConfigs(); track column._id) {
-              @if (column.columnName === 'ID') {
-                <th>ID</th>
-              } @else {
-                <th>
-                  <fd-data-type-selector
-                    [selectedType]="column.dataType"
-                    (selectedTypeChange)="onDataTypeChange($event, column)"
-                  />
-                </th>
-              }
-            }
-          </tr>
-        </thead>
-
-        <tbody class="file-preview__table-data-rows">
-          @for (row of file()!.preview; track row[0]; let index = $index) {
-            <tr>
-              <td class="file-preview__table-data-row-number">{{ index + 1 }}</td>
-
+      <div class="file-preview__table-container">
+        <table class="file-preview__table">
+          <thead>
+            <tr class="file-preview__table-data-types">
+              <th [attr.colspan]="2">Assign Column Types</th>
               @for (column of columnConfigs(); track column._id) {
-                @let value = row[column.columnName];
-                <td>
-                  @switch (column.dataType) {
-                    @case ('number') {
-                      {{ value | cleanNumber }}
-                    }
-                    @case ('date') {
-                      {{ value | cleanDate }}
-                    }
-                    @default {
-                      {{ value }}
-                    }
-                  }
-                </td>
+                @if (column.columnName !== 'ID') {
+                  <th>{{ column.columnName }}</th>
+                }
               }
             </tr>
-          }
-        </tbody>
 
-        <tfoot class="file-preview__table-data-footer">
-          <tr>
-            <td [attr.colspan]="columnConfigs().length + 1">
-              <button class="file-preview__table-data-footer-button" (click)="loadMore()">
-                Load more...
-              </button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+            <tr class="file-preview__table-data-names">
+              <th class="file-preview__table-data-row-number"></th>
+              @for (column of columnConfigs(); track column._id) {
+                @if (column.columnName === 'ID') {
+                  <th>ID</th>
+                } @else {
+                  <th>
+                    <fd-data-type-selector
+                      [selectedType]="column.dataType"
+                      (selectedTypeChange)="onDataTypeChange($event, column)"
+                    />
+                  </th>
+                }
+              }
+            </tr>
+          </thead>
+
+          <tbody class="file-preview__table-data-rows">
+            @for (row of file()!.preview; track row[0]; let index = $index) {
+              <tr>
+                <td class="file-preview__table-data-row-number">{{ index + 1 }}</td>
+
+                @for (column of columnConfigs(); track column._id) {
+                  @let value = row[column.columnName];
+                  <td>
+                    @switch (column.dataType) {
+                      @case ('number') {
+                        {{ value | cleanNumber }}
+                      }
+                      @case ('date') {
+                        {{ value | cleanDate }}
+                      }
+                      @default {
+                        {{ value }}
+                      }
+                    }
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+
+          <tfoot class="file-preview__table-data-footer">
+            <tr>
+              <td [attr.colspan]="columnConfigs().length + 1">
+                <button class="file-preview__table-data-footer-button" (click)="loadMore()">
+                  Load more...
+                </button>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
 
       <div class="file-preview__data-footer">
         <button fd-primary-button [disabled]="!hasChanges()" (click)="saveColumnConfigsChanges()">
