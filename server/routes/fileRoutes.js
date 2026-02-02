@@ -161,7 +161,17 @@ module.exports = (app) => {
     requireFileExistenceAndOwnership,
     async (req, res) => {
       try {
-        res.json(req.targetFile);
+        const workbook = XLSX.readFile(req.targetFile.storagePath);
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+
+        const allRows = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+        const preview = allRows.slice(0, 5);
+
+        const fileResponse = req.targetFile.toObject();
+        fileResponse.preview = preview;
+
+        res.json(fileResponse);
       } catch (error) {
         res.status(500).json({ error: error.message });
       }
