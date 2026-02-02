@@ -113,6 +113,18 @@ const getFileColumns = async (filePath, type) => {
   }
 };
 
+// Get File Preview utility function
+const getFilePreview = (req) => {
+  const workbook = XLSX.readFile(req.targetFile.storagePath);
+  const firstSheetName = workbook.SheetNames[0];
+  const worksheet = workbook.Sheets[firstSheetName];
+
+  const allRows = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+  const preview = allRows.slice(0, 5);
+
+  return preview;
+};
+
 module.exports = (app) => {
   app.post(
     "/files/upload",
@@ -161,15 +173,8 @@ module.exports = (app) => {
     requireFileExistenceAndOwnership,
     async (req, res) => {
       try {
-        const workbook = XLSX.readFile(req.targetFile.storagePath);
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-
-        const allRows = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-        const preview = allRows.slice(0, 5);
-
         const fileResponse = req.targetFile.toObject();
-        fileResponse.preview = preview;
+        fileResponse.preview = getFilePreview(req);
 
         res.json(fileResponse);
       } catch (error) {
@@ -186,9 +191,14 @@ module.exports = (app) => {
       try {
         const updatedFile = await File.findByIdAndUpdate(
           req.params.id,
-          req.body,
+          { $set: req.body },
+          { new: true, runValidators: true },
         );
-        res.json(updatedFile);
+
+        const fileResponse = updatedFile.toObject();
+        fileResponse.preview = getFilePreview(req);
+
+        res.json(fileResponse);
       } catch (error) {
         res.status(500).json({ error: error.message });
       }
