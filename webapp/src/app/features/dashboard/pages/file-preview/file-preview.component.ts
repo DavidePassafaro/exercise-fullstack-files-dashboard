@@ -7,6 +7,7 @@ import { DataTypeSelectorComponent } from '../../components/data-type-selector/d
 import { UploadedFileColumn } from '../../../../shared/models/uploaded-file';
 import { CleanDatePipe } from '../../pipes/clean-date.pipe';
 import { CleanNumberPipe } from '../../pipes/clean-number.pipe';
+import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
 
 @Component({
   selector: 'csv-file-preview',
@@ -19,6 +20,7 @@ import { CleanNumberPipe } from '../../pipes/clean-number.pipe';
     DataTypeSelectorComponent,
     CleanDatePipe,
     CleanNumberPipe,
+    PrimaryButtonComponent,
   ],
 })
 export class FilePreviewComponent {
@@ -45,5 +47,13 @@ export class FilePreviewComponent {
       }
       return columns;
     });
+  }
+
+  saveColumnConfigsChanges(): void {
+    alert('Feature not implemented');
+  }
+
+  cancelColumnConfigsChanges(): void {
+    alert('Feature not implemented');
   }
 }

@@ -2,73 +2,84 @@
   <csv-file-details [file]="file()!" />
 
   <csv-data-layout
+    class="file-preview__data-layout"
     [icon]="'file-preview'"
     [title]="'Preview Data'"
     [description]="'Show first 5 rows of the file.'"
   >
-    <table class="file-preview__table">
-      <thead>
-        <tr class="file-preview__table-data-types">
-          <th [attr.colspan]="2">Assign Column Types</th>
-          @for (column of columnConfigs(); track $index) {
-            @if (column.columnName !== 'ID') {
-              <th>{{ column.columnName }}</th>
-            }
-          }
-        </tr>
-
-        <tr class="file-preview__table-data-names">
-          <th class="file-preview__table-data-row-number"></th>
-          @for (column of columnConfigs(); track $index) {
-            @if (column.columnName === 'ID') {
-              <th>ID</th>
-            } @else {
-              <th>
-                <csv-data-type-selector
-                  [selectedType]="column.dataType"
-                  (selectedTypeChange)="onDataTypeChange($event, column)"
-                />
-              </th>
-            }
-          }
-        </tr>
-      </thead>
-
-      <tbody class="file-preview__table-data-rows">
-        @for (row of file()!.preview; track $index; let index = $index) {
-          <tr>
-            <td class="file-preview__table-data-row-number">{{ index + 1 }}</td>
-
+    <div class="file-preview__data-layout-content">
+      <table class="file-preview__table">
+        <thead>
+          <tr class="file-preview__table-data-types">
+            <th [attr.colspan]="2">Assign Column Types</th>
             @for (column of columnConfigs(); track $index) {
-              @let value = row[column.columnName];
-              <td>
-                @switch (column.dataType) {
-                  @case ('number') {
-                    {{ value | cleanNumber }}
-                  }
-                  @case ('date') {
-                    {{ value | cleanDate }}
-                  }
-                  @default {
-                    {{ value }}
-                  }
-                }
-              </td>
+              @if (column.columnName !== 'ID') {
+                <th>{{ column.columnName }}</th>
+              }
             }
           </tr>
-        }
-      </tbody>
 
-      <tfoot class="file-preview__table-data-footer">
-        <tr>
-          <td [attr.colspan]="columnConfigs().length + 1">
-            <button class="file-preview__table-data-footer-button" (click)="loadMore()">
-              Load more...
-            </button>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+          <tr class="file-preview__table-data-names">
+            <th class="file-preview__table-data-row-number"></th>
+            @for (column of columnConfigs(); track $index) {
+              @if (column.columnName === 'ID') {
+                <th>ID</th>
+              } @else {
+                <th>
+                  <csv-data-type-selector
+                    [selectedType]="column.dataType"
+                    (selectedTypeChange)="onDataTypeChange($event, column)"
+                  />
+                </th>
+              }
+            }
+          </tr>
+        </thead>
+
+        <tbody class="file-preview__table-data-rows">
+          @for (row of file()!.preview; track $index; let index = $index) {
+            <tr>
+              <td class="file-preview__table-data-row-number">{{ index + 1 }}</td>
+
+              @for (column of columnConfigs(); track $index) {
+                @let value = row[column.columnName];
+                <td>
+                  @switch (column.dataType) {
+                    @case ('number') {
+                      {{ value | cleanNumber }}
+                    }
+                    @case ('date') {
+                      {{ value | cleanDate }}
+                    }
+                    @default {
+                      {{ value }}
+                    }
+                  }
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+
+        <tfoot class="file-preview__table-data-footer">
+          <tr>
+            <td [attr.colspan]="columnConfigs().length + 1">
+              <button class="file-preview__table-data-footer-button" (click)="loadMore()">
+                Load more...
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="file-preview__data-footer">
+        <button csv-primary-button (click)="saveColumnConfigsChanges()">Save Changes</button>
+
+        <button csv-primary-button color="secondary" (click)="cancelColumnConfigsChanges()">
+          Cancel
+        </button>
+      </div>
+    </div>
   </csv-data-layout>
 } @else {
   <p>File not found</p>

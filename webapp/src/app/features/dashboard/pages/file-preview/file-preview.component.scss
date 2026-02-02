@@ -4,6 +4,19 @@
   padding: 2rem;
   background-color: var(--background-primary-color);
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.file-preview__data-layout {
+  flex: 1;
+}
+
+.file-preview__data-layout-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .file-preview__table {
@@ -66,4 +79,11 @@ td.file-preview__table-data-row-number {
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
   padding: 0.2rem 1.5rem;
+}
+
+.file-preview__data-footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
