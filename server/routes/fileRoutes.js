@@ -119,7 +119,11 @@ const getFilePreview = (req) => {
   const firstSheetName = workbook.SheetNames[0];
   const worksheet = workbook.Sheets[firstSheetName];
 
-  const allRows = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+  const allRows = XLSX.utils.sheet_to_json(worksheet, {
+    defval: "",
+    raw: false,
+    dateNF: "dd/mm/yyyy",
+  });
   const preview = allRows.slice(0, 5);
 
   return preview;
