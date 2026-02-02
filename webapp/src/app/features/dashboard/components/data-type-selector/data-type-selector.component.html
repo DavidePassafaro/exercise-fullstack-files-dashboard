@@ -1,0 +1,5 @@
+<select class="data-type-selector" [value]="selectedType()" (change)="onTypeChange($event)">
+  @for (dataType of dataTypeLabels; track dataType) {
+    <option [value]="dataType[0]">{{ dataType[1] }}</option>
+  }
+</select>
