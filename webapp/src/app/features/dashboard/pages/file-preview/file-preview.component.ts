@@ -2,13 +2,14 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { ActivatedRoute } from '@angular/router';
 import { FileService } from '../../../../core/services/file.service';
 import { FileDetailsComponent } from '../../components/file-details/file-details.component';
+import { DataLayoutComponent } from '../../components/data-layout/data-layout.component';
 
 @Component({
   selector: 'csv-file-preview',
   templateUrl: './file-preview.component.html',
   styleUrls: ['./file-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FileDetailsComponent],
+  imports: [FileDetailsComponent, DataLayoutComponent],
 })
 export class FilePreviewComponent {
   private route = inject(ActivatedRoute);

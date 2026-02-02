@@ -1,5 +1,13 @@
 @if (file()) {
   <csv-file-details [file]="file()!" />
+
+  <csv-data-layout
+    [icon]="'file-preview'"
+    [title]="'Preview Data'"
+    [description]="'Show first 5 rows of the file.'"
+  >
+    <div class="file-preview__content">TODO</div>
+  </csv-data-layout>
 } @else {
   <p>File not found</p>
 }
