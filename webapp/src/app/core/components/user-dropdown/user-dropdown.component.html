@@ -1,7 +1,7 @@
 <div
   class="user-dropdown__container"
   (click)="toggleDropdown()"
-  csvClickOutside
+  fdClickOutside
   (onOutsideClick)="closeDropdown()"
 >
   <div class="user-dropdown__initials">
@@ -11,7 +11,7 @@
   <span class="user-dropdown__name">{{ user().name }}</span>
 
   <div class="user-dropdown__arrow">
-    <i class="csv-icon">
+    <i class="fd-icon">
       {{ !isOpen() ? 'chevron-down' : 'chevron-up' }}
     </i>
   </div>

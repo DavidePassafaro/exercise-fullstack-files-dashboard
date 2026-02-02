@@ -5,7 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 
 @Component({
-  selector: 'csv-user-dropdown',
+  selector: 'fd-user-dropdown',
   templateUrl: './user-dropdown.component.html',
   styleUrls: ['./user-dropdown.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

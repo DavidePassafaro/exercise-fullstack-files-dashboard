@@ -3,7 +3,7 @@
 
   <form class="login__form" [formGroup]="form" (ngSubmit)="onSubmit()">
     @let emailControl = form.get('email');
-    <input csv-primary-input type="email" formControlName="email" placeholder="Email" />
+    <input fd-primary-input type="email" formControlName="email" placeholder="Email" />
     @if (emailControl?.invalid && emailControl?.touched) {
       @if (emailControl?.hasError('required')) {
         <div class="login__error">
@@ -19,7 +19,7 @@
 
     @let passwordControl = form.get('password');
     <input
-      csv-primary-input
+      fd-primary-input
       type="password"
       formControlName="password"
       placeholder="Password"
@@ -39,7 +39,7 @@
       </div>
     }
 
-    <button csv-primary-button type="submit" [disabled]="form.invalid">Login</button>
+    <button fd-primary-button type="submit" [disabled]="form.invalid">Login</button>
   </form>
 
   <a class="login__link" routerLink="/auth/signup">Don't have an account? Sign up</a>

@@ -3,7 +3,7 @@
 
   <form class="signup__form" [formGroup]="form" (ngSubmit)="onSubmit()">
     @let nameControl = form.get('name');
-    <input csv-primary-input type="text" formControlName="name" placeholder="Name" />
+    <input fd-primary-input type="text" formControlName="name" placeholder="Name" />
     @if (nameControl?.invalid && nameControl?.touched) {
       @if (nameControl?.hasError('required')) {
         <div class="signup__error">
@@ -13,7 +13,7 @@
     }
 
     @let emailControl = form.get('email');
-    <input csv-primary-input type="email" formControlName="email" placeholder="Email" />
+    <input fd-primary-input type="email" formControlName="email" placeholder="Email" />
     @if (emailControl?.invalid && emailControl?.touched) {
       @if (emailControl?.hasError('required')) {
         <div class="signup__error">
@@ -29,7 +29,7 @@
 
     @let passwordControl = form.get('password');
     <input
-      csv-primary-input
+      fd-primary-input
       type="password"
       formControlName="password"
       placeholder="Password"
@@ -49,7 +49,7 @@
       </div>
     }
 
-    <button csv-primary-button type="submit" [disabled]="form.invalid">Signup</button>
+    <button fd-primary-button type="submit" [disabled]="form.invalid">Signup</button>
   </form>
 
   <a class="signup__link" routerLink="/auth/login">Already have an account? Login</a>

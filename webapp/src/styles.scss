@@ -255,18 +255,18 @@ h6 {
 // Icons
 
 @font-face {
-  font-family: 'csv-icons';
+  font-family: 'fd-icons';
   src:
-    url('fonts/csv-icons.woff2') format('woff2'),
-    url('fonts/csv-icons.ttf') format('truetype'),
-    url('fonts/csv-icons.woff') format('woff');
+    url('fonts/fd-icons.woff2') format('woff2'),
+    url('fonts/fd-icons.ttf') format('truetype'),
+    url('fonts/fd-icons.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
-.csv-icon {
+.fd-icon {
   /* Use !important to prevent extensions from overriding this font. */
-  font-family: 'csv-icons' !important;
+  font-family: 'fd-icons' !important;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;

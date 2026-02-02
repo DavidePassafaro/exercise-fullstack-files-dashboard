@@ -4,7 +4,7 @@ export interface UploadedFile {
   _id: string;
   name: string;
   originalName: string;
-  type: 'csv';
+  type: 'csv' | 'xlsx';
   size: number;
   uploadDate: Date;
   owner: User;

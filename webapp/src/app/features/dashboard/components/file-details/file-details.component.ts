@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 import { DataLayoutComponent } from '../data-layout/data-layout.component';
 
 @Component({
-  selector: 'csv-file-details',
+  selector: 'fd-file-details',
   templateUrl: './file-details.component.html',
   styleUrls: ['./file-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

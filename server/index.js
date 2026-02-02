@@ -7,7 +7,7 @@ require("./models/User");
 require("./models/File");
 
 // Database connection
-const dbName = "csv_dashboard";
+const dbName = "files_dashboard";
 const dbURI = process.env.MONGODB_URI || `mongodb://localhost:27017/${dbName}`;
 
 // Connect to MongoDB

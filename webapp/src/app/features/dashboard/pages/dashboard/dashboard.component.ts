@@ -8,7 +8,7 @@ import { UploadedFile } from '../../../../shared/models/uploaded-file';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'csv-dashboard',
+  selector: 'fd-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

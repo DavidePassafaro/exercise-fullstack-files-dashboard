@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'input[csv-primary-input]',
+  selector: 'input[fd-primary-input]',
   templateUrl: './primary-input.component.html',
   styleUrl: './primary-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

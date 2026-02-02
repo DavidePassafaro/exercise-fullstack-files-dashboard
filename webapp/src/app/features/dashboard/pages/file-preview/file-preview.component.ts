@@ -17,7 +17,7 @@ import { CleanNumberPipe } from '../../pipes/clean-number.pipe';
 import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
 
 @Component({
-  selector: 'csv-file-preview',
+  selector: 'fd-file-preview',
   templateUrl: './file-preview.component.html',
   styleUrls: ['./file-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -3,7 +3,7 @@ import { catchError, of, tap } from 'rxjs';
 import { FileService } from '../../../../core/services/file.service';
 
 @Component({
-  selector: 'csv-upload-file-button',
+  selector: 'fd-upload-file-button',
   templateUrl: './upload-file-button.component.html',
   styleUrls: ['./upload-file-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,7 +14,6 @@ export class UploadFileButtonComponent {
   protected isUploading = signal<boolean>(false);
 
   uploadFile(): void {
-    // trigger csv file upload
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = '.csv,.xlsx';

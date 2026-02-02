@@ -9,7 +9,7 @@
   >
     <div class="drop-zone-content">
       <div class="icon-container">
-        <i class="csv-icon">download</i>
+        <i class="fd-icon">download</i>
       </div>
 
       <div class="text-container">
@@ -37,7 +37,7 @@
 
       <div class="file-list">
         @for (file of selectedFiles(); track $index) {
-          <csv-file-card [name]="file.name" [size]="file.size" (removeFile)="removeFile($index)" />
+          <fd-file-card [name]="file.name" [size]="file.size" (removeFile)="removeFile($index)" />
         }
       </div>
 

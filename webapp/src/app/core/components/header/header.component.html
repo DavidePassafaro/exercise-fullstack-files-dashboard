@@ -1,5 +1,5 @@
 <header class="d-flex">
-  <i class="csv-icon" [routerLink]="['/']">file-text</i>
+  <i class="fd-icon" [routerLink]="['/']">file-text</i>
 
   <!-- Breadcrumb -->
   <nav>
@@ -16,18 +16,18 @@
   </nav>
 
   @if (isAuthenticated()) {
-    <csv-notification-icon [hasNotification]="false" (click)="onNotificationClick()">
+    <fd-notification-icon [hasNotification]="false" (click)="onNotificationClick()">
       bell-plus
-    </csv-notification-icon>
+    </fd-notification-icon>
 
-    <csv-notification-icon [hasNotification]="true" (click)="onNotificationClick()">
+    <fd-notification-icon [hasNotification]="true" (click)="onNotificationClick()">
       wallet-cards
-    </csv-notification-icon>
+    </fd-notification-icon>
 
-    <csv-notification-icon [hasNotification]="true" (click)="onNotificationClick()">
+    <fd-notification-icon [hasNotification]="true" (click)="onNotificationClick()">
       mail
-    </csv-notification-icon>
+    </fd-notification-icon>
 
-    <csv-user-dropdown [user]="user()!"></csv-user-dropdown>
+    <fd-user-dropdown [user]="user()!"></fd-user-dropdown>
   }
 </header>

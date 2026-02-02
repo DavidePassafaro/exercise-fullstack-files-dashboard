@@ -1,7 +1,7 @@
 @if (file()) {
-  <csv-file-details [file]="file()!" />
+  <fd-file-details [file]="file()!" />
 
-  <csv-data-layout
+  <fd-data-layout
     class="file-preview__data-layout"
     [icon]="'file-preview'"
     [title]="'Preview Data'"
@@ -26,7 +26,7 @@
                 <th>ID</th>
               } @else {
                 <th>
-                  <csv-data-type-selector
+                  <fd-data-type-selector
                     [selectedType]="column.dataType"
                     (selectedTypeChange)="onDataTypeChange($event, column)"
                   />
@@ -73,7 +73,7 @@
       </table>
 
       <div class="file-preview__data-footer">
-        <button csv-primary-button [disabled]="!hasChanges()" (click)="saveColumnConfigsChanges()">
+        <button fd-primary-button [disabled]="!hasChanges()" (click)="saveColumnConfigsChanges()">
           @if (isSaving()) {
             Saving...
           } @else {
@@ -82,7 +82,7 @@
         </button>
 
         <button
-          csv-primary-button
+          fd-primary-button
           color="secondary"
           [disabled]="!hasChanges()"
           (click)="cancelColumnConfigsChanges()"
@@ -91,7 +91,7 @@
         </button>
       </div>
     </div>
-  </csv-data-layout>
+  </fd-data-layout>
 } @else {
   <p>File not found</p>
 }

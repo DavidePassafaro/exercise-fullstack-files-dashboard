@@ -4,7 +4,7 @@ import { catchError, of, tap } from 'rxjs';
 import { FileCardComponent } from '../file-card/file-card.component';
 
 @Component({
-  selector: 'csv-upload-file',
+  selector: 'fd-upload-file',
   templateUrl: './upload-file.component.html',
   styleUrls: ['./upload-file.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -47,9 +47,10 @@ export class UploadFileComponent {
   }
 
   private addFiles(fileList: FileList) {
-    const files = Array.from(fileList).filter((file) => file.name.endsWith('.csv'));
+    const files = Array.from(fileList).filter(
+      (file) => file.name.endsWith('.csv') || file.name.endsWith('.xlsx'),
+    );
     const currentFiles = this.selectedFiles();
-    // Simple deduplication by name and size
     const newFiles = files.filter(
       (f) => !currentFiles.some((cf) => cf.name === f.name && cf.size === f.size),
     );
@@ -63,7 +64,7 @@ export class UploadFileComponent {
   handleMultipleUpload() {
     const files = this.selectedFiles();
     if (files.length === 0) {
-      alert('Select at least one .csv file');
+      alert('Select at least one .csv or .xlsx file');
       return;
     }
 

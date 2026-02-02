@@ -1,6 +1,6 @@
 import { Directive, ElementRef, HostListener, inject, output } from '@angular/core';
 
-@Directive({ selector: '[csvClickOutside]' })
+@Directive({ selector: '[fdClickOutside]' })
 export class ClickOutsideDirective {
   elementRef = inject(ElementRef);
 

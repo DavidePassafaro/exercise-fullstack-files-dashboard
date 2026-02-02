@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'button[csv-primary-button], a[csv-primary-button]',
+  selector: 'button[fd-primary-button], a[fd-primary-button]',
   templateUrl: './primary-button.component.html',
   styleUrl: './primary-button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

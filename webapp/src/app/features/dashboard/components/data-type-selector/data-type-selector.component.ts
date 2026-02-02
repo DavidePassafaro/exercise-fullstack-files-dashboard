@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 type DataType = 'text' | 'number' | 'date';
 
 @Component({
-  selector: 'csv-data-type-selector',
+  selector: 'fd-data-type-selector',
   templateUrl: './data-type-selector.component.html',
   styleUrls: ['./data-type-selector.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

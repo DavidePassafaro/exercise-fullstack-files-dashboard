@@ -12,7 +12,7 @@ interface Breadcrumb {
 }
 
 @Component({
-  selector: 'csv-header',
+  selector: 'fd-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

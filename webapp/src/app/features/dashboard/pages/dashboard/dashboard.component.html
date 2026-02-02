@@ -1,11 +1,11 @@
 <div class="dashboard-content">
   @if (files().length === 0) {
     <div class="upload-header">
-      <h1>CSV Dataset Upload</h1>
+      <h1>File Dataset Upload</h1>
       <p>Upload your data to start analyzing and visualizing.</p>
     </div>
 
-    <csv-upload-file />
+    <fd-upload-file />
   } @else {
     <div class="header">
       <div class="header__title">
@@ -13,11 +13,11 @@
         <p>Select a file to analyze and visualize.</p>
       </div>
 
-      <csv-upload-file-button />
+      <fd-upload-file-button />
     </div>
 
     <cdk-virtual-scroll-viewport itemSize="88" class="dashboard-file-list">
-      <csv-file-card
+      <fd-file-card
         *cdkVirtualFor="let file of files(); let i = index; trackBy: trackByFn"
         [name]="file.name"
         [size]="file.size"

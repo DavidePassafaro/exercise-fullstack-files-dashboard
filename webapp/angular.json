@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "csv-dashboard": {
+    "files-dashboard": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -15,7 +15,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "csv",
+      "prefix": "fd",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -59,10 +59,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "csv-dashboard:build:production"
+              "buildTarget": "files-dashboard:build:production"
             },
             "development": {
-              "buildTarget": "csv-dashboard:build:development"
+              "buildTarget": "files-dashboard:build:development"
             }
           },
           "defaultConfiguration": "development"

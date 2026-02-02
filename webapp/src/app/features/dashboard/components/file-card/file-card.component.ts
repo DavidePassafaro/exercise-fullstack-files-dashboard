@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 import { FileSizePipe } from '../../../../shared/pipes/file-size.pipe';
 
 @Component({
-  selector: 'csv-file-card',
+  selector: 'fd-file-card',
   templateUrl: './file-card.component.html',
   styleUrls: ['./file-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 
 @Component({
-  selector: 'csv-data-layout',
+  selector: 'fd-data-layout',
   templateUrl: './data-layout.component.html',
   styleUrls: ['./data-layout.component.scss'],
 })

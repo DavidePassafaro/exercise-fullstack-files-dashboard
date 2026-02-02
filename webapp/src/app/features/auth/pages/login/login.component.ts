@@ -7,7 +7,7 @@ import { PrimaryInputComponent } from '../../../../shared/components/primary-inp
 import { catchError, of, tap } from 'rxjs';
 
 @Component({
-  selector: 'csv-login',
+  selector: 'fd-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   imports: [RouterLink, ReactiveFormsModule, PrimaryButtonComponent, PrimaryInputComponent],

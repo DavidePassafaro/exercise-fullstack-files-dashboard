@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
-  selector: 'csv-notification-icon',
+  selector: 'fd-notification-icon',
   templateUrl: './notification-icon.component.html',
   styleUrls: ['./notification-icon.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
