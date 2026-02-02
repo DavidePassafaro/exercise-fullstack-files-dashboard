@@ -41,6 +41,28 @@ const requireAuth = async (req, res, next) => {
   }
 };
 
+// File existence and ownership middleware
+const requireFileExistenceAndOwnership = async (req, res, next) => {
+  try {
+    const file = await File.findById(req.params.id);
+
+    if (!file) {
+      return res.status(404).json({ error: "File not found" });
+    }
+
+    if (file.owner.toString() !== req.user.id.toString()) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    req.targetFile = file;
+    next();
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Internal Server Error during file verification" });
+  }
+};
+
 // File Type utility function
 const getFileType = async (file) => {
   const typeInfo = await fileTypeFromFile(file.path);
@@ -75,7 +97,7 @@ module.exports = (app) => {
     async (req, res) => {
       try {
         if (!req.files || req.files.length === 0) {
-          return res.status(400).json({ error: "Nessun file ricevuto" });
+          return res.status(400).json({ error: "No files uploaded" });
         }
 
         const savedFiles = await Promise.all(
@@ -109,56 +131,47 @@ module.exports = (app) => {
     }
   });
 
-  app.get("/files/:id", requireAuth, async (req, res) => {
-    try {
-      const file = await File.findById(req.params.id);
-      if (!file) {
-        return res.status(404).json({ error: "File not found" });
+  app.get(
+    "/files/:id",
+    requireAuth,
+    requireFileExistenceAndOwnership,
+    async (req, res) => {
+      try {
+        res.json(req.targetFile);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
       }
+    },
+  );
 
-      if (file.owner.toString() !== req.user.id.toString()) {
-        return res.status(403).json({ error: "Unauthorized" });
+  app.put(
+    "/files/:id",
+    requireAuth,
+    requireFileExistenceAndOwnership,
+    async (req, res) => {
+      try {
+        const updatedFile = await File.findByIdAndUpdate(
+          req.params.id,
+          req.body,
+        );
+        res.json(updatedFile);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
       }
+    },
+  );
 
-      res.json(file);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  app.put("/files/:id", requireAuth, async (req, res) => {
-    try {
-      const file = await File.findById(req.params.id);
-      if (!file) {
-        return res.status(404).json({ error: "File not found" });
+  app.delete(
+    "/files/:id",
+    requireAuth,
+    requireFileExistenceAndOwnership,
+    async (req, res) => {
+      try {
+        const deletedFile = await File.findByIdAndDelete(req.params.id);
+        res.json(deletedFile);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
       }
-
-      if (file.owner.toString() !== req.user.id.toString()) {
-        return res.status(403).json({ error: "Unauthorized" });
-      }
-
-      const updatedFile = await File.findByIdAndUpdate(req.params.id, req.body);
-      res.json(updatedFile);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  app.delete("/files/:id", requireAuth, async (req, res) => {
-    try {
-      const file = await File.findById(req.params.id);
-      if (!file) {
-        return res.status(404).json({ error: "File not found" });
-      }
-
-      if (file.owner.toString() !== req.user.id.toString()) {
-        return res.status(403).json({ error: "Unauthorized" });
-      }
-
-      const deletedFile = await File.findByIdAndDelete(req.params.id);
-      res.json(deletedFile);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  });
+    },
+  );
 };
