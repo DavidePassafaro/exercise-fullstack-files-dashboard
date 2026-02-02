@@ -5,7 +5,7 @@
 }
 
 .drop-zone {
-  background: var(--background-color);
+  background: var(--background-secondary-color);
   border: 2px dashed var(--border-color);
   border-radius: 1rem;
   padding: 3rem 2rem;
@@ -73,7 +73,7 @@
 }
 
 .file-list-container {
-  background: white;
+  background: var(--background-tertiary-color);
   border-radius: 1rem;
   padding: 1.5rem;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);

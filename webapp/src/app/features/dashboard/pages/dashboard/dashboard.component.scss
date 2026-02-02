@@ -2,7 +2,7 @@
   display: block;
   height: 100%;
   padding: 2rem;
-  background-color: var(--background-color);
+  background-color: var(--background-primary-color);
   box-sizing: border-box;
 }
 
@@ -51,4 +51,5 @@
 csv-file-card {
   display: block;
   box-sizing: border-box;
+  cursor: pointer;
 }
