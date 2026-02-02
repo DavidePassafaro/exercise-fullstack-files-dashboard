@@ -12,8 +12,10 @@ module.exports = (app) => {
         return res.status(400).send("User already exists");
       }
 
+      const decryptedPassword = atob(password);
+
       // Create new user
-      const user = new User({ name, email, password });
+      const user = new User({ name, email, password: decryptedPassword });
       await user.save();
 
       // Send response
@@ -33,8 +35,11 @@ module.exports = (app) => {
         return res.status(400).send({ message: "User not found" });
       }
 
+      const decryptedPassword = atob(password);
+
       // Check if password is correct
-      const isPasswordValid = await existingUser.comparePassword(password);
+      const isPasswordValid =
+        await existingUser.comparePassword(decryptedPassword);
       if (!isPasswordValid) {
         return res.status(400).send("Invalid password");
       }

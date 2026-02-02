@@ -13,12 +13,18 @@ export class AuthService {
   private userService = inject(UserService);
 
   signup(name: string, email: string, password: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/auth/signup`, { name, email, password });
+    const encryptedPassword = btoa(password);
+    return this.http.post<void>(`${this.baseUrl}/auth/signup`, {
+      name,
+      email,
+      password: encryptedPassword,
+    });
   }
 
   login(email: string, password: string): Observable<User> {
+    const encryptedPassword = btoa(password);
     return this.http
-      .post(`${this.baseUrl}/auth/login`, { email, password })
+      .post(`${this.baseUrl}/auth/login`, { email, password: encryptedPassword })
       .pipe(switchMap(() => this.userService.getUser()));
   }
 
