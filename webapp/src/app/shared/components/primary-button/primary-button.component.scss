@@ -25,5 +25,17 @@
     background-color: var(--background-secondary-color);
     color: var(--secondary-text-color);
     border: 1px solid var(--border-color);
+
+    &:hover {
+      background-color: var(--background-secondary-color);
+    }
+
+    &:active {
+      background-color: var(--background-secondary-color);
+    }
+
+    &:disabled {
+      background-color: var(--background-secondary-color);
+    }
   }
 }
