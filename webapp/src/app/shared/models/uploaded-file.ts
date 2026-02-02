@@ -9,10 +9,13 @@ export interface UploadedFile {
   uploadDate: Date;
   owner: User;
   storagePath: string;
-  columnConfigs: ColumnConfig[];
+  columnConfigs: UploadedFileColumn[];
+  preview: {
+    [key: string]: string | number | Date;
+  }[];
 }
 
-interface ColumnConfig {
+export interface UploadedFileColumn {
   columnName: string;
   dataType: 'text' | 'number' | 'date';
 }
