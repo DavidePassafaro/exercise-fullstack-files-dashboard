@@ -7,14 +7,27 @@ require("./models/User");
 require("./models/File");
 
 // Database connection
-const dbName = "files_dashboard";
-const dbURI = process.env.MONGODB_URI || `mongodb://localhost:27017/${dbName}`;
+const dbUser = process.env.MONGO_USERNAME;
+const dbPassword = process.env.MONGO_PASSWORD;
+const dbHost = process.env.MONGO_HOSTNAME || "localhost";
+const dbPort = process.env.MONGO_PORT || "27017";
+const dbName = process.env.MONGO_DB || "files_dashboard";
+
+let dbURI;
+if (dbUser && dbPassword) {
+  dbURI = `mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=admin`;
+} else {
+  dbURI = `mongodb://${dbHost}:${dbPort}/${dbName}`;
+}
 
 // Connect to MongoDB
 mongoose
   .connect(dbURI)
-  .then(() => console.log(`Connesso al database: ${dbName}`))
-  .catch((err) => console.log(err));
+  .then(() => console.log(`Connected to MongoDB: ${dbName} on ${dbHost}`))
+  .catch((err) => {
+    console.error("Error connecting to MongoDB:", err.message);
+    process.exit(1);
+  });
 
 // Initialize Express app
 const app = express();
