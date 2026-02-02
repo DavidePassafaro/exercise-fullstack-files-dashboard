@@ -5,6 +5,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { UploadFileButtonComponent } from '../../components/upload-file-button/upload-file-button.component';
 import { FileCardComponent } from '../../components/file-card/file-card.component';
 import { UploadedFile } from '../../../../shared/models/uploaded-file';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'csv-dashboard',
@@ -14,6 +15,7 @@ import { UploadedFile } from '../../../../shared/models/uploaded-file';
   imports: [UploadFileComponent, FileCardComponent, UploadFileButtonComponent, ScrollingModule],
 })
 export class DashboardComponent {
+  private router = inject(Router);
   private fileService = inject(FileService);
 
   files = this.fileService.filesList;
@@ -22,6 +24,10 @@ export class DashboardComponent {
     if (confirm('Are you sure you want to delete this file?')) {
       this.fileService.deleteFile(this.files()[fileIndex]._id).subscribe();
     }
+  }
+
+  onSelectFile(fileIndex: number): void {
+    this.router.navigate(['/dashboard', this.files()[fileIndex]._id]);
   }
 
   trackByFn(index: number, item: UploadedFile) {

@@ -22,6 +22,7 @@
         [name]="file.name"
         [size]="file.size"
         (removeFile)="onRemoveFile(i)"
+        (click)="onSelectFile(i)"
       />
     </cdk-virtual-scroll-viewport>
   }

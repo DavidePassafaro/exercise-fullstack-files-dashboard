@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
-import { Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, RedirectCommand, Router, Routes } from '@angular/router';
 import { FileService } from '../../core/services/file.service';
+import { catchError, of } from 'rxjs';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,17 @@ export const routes: Routes = [
         title: 'File Preview',
         data: {
           breadcrumbs: 'File Upload - Preview',
+        },
+        resolve: {
+          file: (route: ActivatedRouteSnapshot) => {
+            const router = inject(Router);
+            const fileService = inject(FileService);
+            const fileId = route.paramMap.get('id');
+
+            return fileService
+              .getFileById(fileId!)
+              .pipe(catchError(() => of(new RedirectCommand(router.parseUrl('/dashboard')))));
+          },
         },
       },
     ],
