@@ -28,7 +28,13 @@
     }
 
     @let passwordControl = form.get('password');
-    <input csv-primary-input type="password" formControlName="password" placeholder="Password" />
+    <input
+      csv-primary-input
+      type="password"
+      formControlName="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    />
     @if (passwordControl?.invalid && passwordControl?.touched) {
       @if (passwordControl?.hasError('required')) {
         <div class="signup__error">
