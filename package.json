@@ -8,13 +8,10 @@
     "start-server": "cd server && npm run dev",
     "start-webapp": "cd webapp && npm run dev",
     "build": "docker compose build",
-    "start-db": "docker compose up -d db",
-    "stop-db": "docker compose down db",
-    "start-be": "docker compose up -d server",
-    "stop-be": "docker compose down server",
     "start-fe": "docker compose up -d webapp",
+    "stop-db": "docker compose down db",
+    "stop-be": "docker compose down server",
     "stop-fe": "docker compose down webapp",
-    "init-docker": "npm run build && npm run start-be",
     "start-docker": "npm run build && npm run start-fe",
     "stop-docker": "npm run stop-db && npm run stop-be && npm run stop-fe"
   }
