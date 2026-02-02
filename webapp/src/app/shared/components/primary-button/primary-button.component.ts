@@ -1,10 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  output,
-  HostBinding,
-  HostListener,
   ViewEncapsulation,
+  input,
+  computed,
 } from '@angular/core';
 
 @Component({
@@ -13,15 +12,13 @@ import {
   styleUrl: './primary-button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  host: {
+    '[class.primary-button]': 'true',
+    '[class.primary-button--secondary]': 'isSecondary()',
+  },
 })
 export class PrimaryButtonComponent {
-  clicked = output<void>();
+  color = input<'primary' | 'secondary'>('primary');
 
-  @HostBinding('class.primary-button')
-  buttonClass = true;
-
-  @HostListener('click')
-  onButtonClick() {
-    this.clicked.emit();
-  }
+  protected isSecondary = computed(() => this.color() === 'secondary');
 }

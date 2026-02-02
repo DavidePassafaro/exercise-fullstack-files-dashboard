@@ -1,6 +1,6 @@
 .primary-button {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 1.4rem;
   background-color: var(--primary-color);
   color: var(--contrast-text-color);
   border-radius: 4px;
@@ -19,5 +19,11 @@
   &:disabled {
     background-color: var(--tertiary-color);
     cursor: not-allowed;
+  }
+
+  &--secondary {
+    background-color: var(--background-secondary-color);
+    color: var(--secondary-text-color);
+    border: 1px solid var(--border-color);
   }
 }
