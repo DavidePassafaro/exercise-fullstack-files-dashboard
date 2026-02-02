@@ -19,6 +19,28 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Authentication middleware
+const requireAuth = async (req, res, next) => {
+  try {
+    const token = req.cookies?.token;
+    if (!token) {
+      return res.status(401).send("Unauthorized: No token provided");
+    }
+
+    const user = await User.findById(token);
+    if (!user) {
+      return res.status(401).send("Unauthorized: User not found");
+    }
+
+    req.user = user;
+    next();
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Internal Server Error during authentication" });
+  }
+};
+
 // File Type utility function
 const getFileType = async (file) => {
   const typeInfo = await fileTypeFromFile(file.path);
@@ -46,80 +68,55 @@ const getFileType = async (file) => {
 };
 
 module.exports = (app) => {
-  app.post("/files/upload", upload.array("files", 10), async (req, res) => {
+  app.post(
+    "/files/upload",
+    requireAuth,
+    upload.array("files", 10),
+    async (req, res) => {
+      try {
+        if (!req.files || req.files.length === 0) {
+          return res.status(400).json({ error: "Nessun file ricevuto" });
+        }
+
+        const savedFiles = await Promise.all(
+          req.files.map(async (f) => {
+            const newFile = new File({
+              name: f.originalname,
+              originalName: f.originalname,
+              type: await getFileType(f),
+              size: f.size,
+              storagePath: f.path,
+              owner: req.user.id,
+              columnConfigs: [],
+            });
+            return newFile.save();
+          }),
+        );
+
+        res.json(savedFiles);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    },
+  );
+
+  app.get("/files", requireAuth, async (req, res) => {
     try {
-      const token = req.cookies?.token;
-      if (!token) {
-        return res.status(401).send("Unauthorized");
-      }
-
-      const user = await User.findById(token);
-      if (!user) {
-        return res.status(401).send("Unauthorized");
-      }
-
-      if (!req.files || req.files.length === 0) {
-        return res.status(400).json({ error: "Nessun file ricevuto" });
-      }
-
-      const savedFiles = await Promise.all(
-        req.files.map(async (f) => {
-          const newFile = new File({
-            name: f.originalname,
-            originalName: f.originalname,
-            type: await getFileType(f),
-            size: f.size,
-            storagePath: f.path,
-            owner: user.id,
-            columnConfigs: [],
-          });
-          return newFile.save();
-        }),
-      );
-
-      res.json(savedFiles);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  app.get("/files", async (req, res) => {
-    try {
-      const token = req.cookies?.token;
-      if (!token) {
-        return res.status(401).send("Unauthorized");
-      }
-
-      const user = await User.findById(token);
-      if (!user) {
-        return res.status(401).send("Unauthorized");
-      }
-
-      const files = await File.find({ owner: user.id });
+      const files = await File.find({ owner: req.user.id });
       res.json(files);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   });
 
-  app.get("/files/:id", async (req, res) => {
+  app.get("/files/:id", requireAuth, async (req, res) => {
     try {
-      const token = req.cookies?.token;
-      if (!token) {
-        return res.status(401).send("Unauthorized");
-      }
-
-      const user = await User.findById(token);
-      if (!user) {
-        return res.status(401).send("Unauthorized");
-      }
-
       const file = await File.findById(req.params.id);
       if (!file) {
         return res.status(404).json({ error: "File not found" });
       }
 
-      if (file.owner.toString() !== user.id.toString()) {
+      if (file.owner.toString() !== req.user.id.toString()) {
         return res.status(403).json({ error: "Unauthorized" });
       }
 
@@ -129,24 +126,14 @@ module.exports = (app) => {
     }
   });
 
-  app.put("/files/:id", async (req, res) => {
+  app.put("/files/:id", requireAuth, async (req, res) => {
     try {
-      const token = req.cookies?.token;
-      if (!token) {
-        return res.status(401).send("Unauthorized");
-      }
-
-      const user = await User.findById(token);
-      if (!user) {
-        return res.status(401).send("Unauthorized");
-      }
-
       const file = await File.findById(req.params.id);
       if (!file) {
         return res.status(404).json({ error: "File not found" });
       }
 
-      if (file.owner.toString() !== user.id.toString()) {
+      if (file.owner.toString() !== req.user.id.toString()) {
         return res.status(403).json({ error: "Unauthorized" });
       }
 
@@ -157,24 +144,14 @@ module.exports = (app) => {
     }
   });
 
-  app.delete("/files/:id", async (req, res) => {
+  app.delete("/files/:id", requireAuth, async (req, res) => {
     try {
-      const token = req.cookies?.token;
-      if (!token) {
-        return res.status(401).send("Unauthorized");
-      }
-
-      const user = await User.findById(token);
-      if (!user) {
-        return res.status(401).send("Unauthorized");
-      }
-
       const file = await File.findById(req.params.id);
       if (!file) {
         return res.status(404).json({ error: "File not found" });
       }
 
-      if (file.owner.toString() !== user.id.toString()) {
+      if (file.owner.toString() !== req.user.id.toString()) {
         return res.status(403).json({ error: "Unauthorized" });
       }
 
