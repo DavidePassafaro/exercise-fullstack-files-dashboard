@@ -121,7 +121,9 @@ Non escludo che ci siano configurazioni più efficienti, tuttavia, ho cercato di
 4. **State Management:**
    - In previsione di crescita del progetto, sarebbe opportuno implementare una soluzione di state management più robusta, come NgRx. Questa, permetterebbe di gestire lo stato globale dell'applicazione in modo più efficiente e scalabile, oltre a fornire strumenti per la gestione degli effetti collaterali e la gestione degli errori. Una webapp con molte entità e interazioni tra di esse, come cambio di permessi e collaborazione real time (mediante websocket), beneficerebbe enormemente di una soluzione di state management centralizzata.
 
-## Requisiti extra
+---
+
+## 🌟 Requisiti extra
 
 - ✅ Supporto formati file aggiuntivi (es. Excel)
 - ✅ Upload simultaneo di più file
