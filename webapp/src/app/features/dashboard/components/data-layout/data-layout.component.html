@@ -1,21 +1,19 @@
 <div class="data-layout">
-  <div class="data-layout__header">
-    <div class="data-layout__header-icon">
-      <i class="csv-icon">{{ icon() }}</i>
-    </div>
+  <div class="data-layout__header-icon">
+    <i class="csv-icon">{{ icon() }}</i>
+  </div>
 
-    <div class="data-layout__header-content">
-      <h1 class="data-layout__header-title">{{ title() }}</h1>
+  <div class="data-layout__content">
+    <h1 class="data-layout__content-title">{{ title() }}</h1>
 
-      <hr class="data-layout__header-divider" />
+    <hr class="data-layout__content-divider" />
 
-      @if (description()) {
-        <p class="data-layout__header-description">{{ description() }}</p>
-      }
+    @if (description()) {
+      <p class="data-layout__content-description">{{ description() }}</p>
+    }
 
-      <div class="data-layout__content">
-        <ng-content></ng-content>
-      </div>
+    <div class="data-layout__content-body">
+      <ng-content></ng-content>
     </div>
   </div>
 </div>
