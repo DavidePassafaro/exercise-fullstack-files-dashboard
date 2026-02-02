@@ -16,6 +16,7 @@ export interface UploadedFile {
 }
 
 export interface UploadedFileColumn {
+  _id: string;
   columnName: string;
   dataType: 'text' | 'number' | 'date';
 }

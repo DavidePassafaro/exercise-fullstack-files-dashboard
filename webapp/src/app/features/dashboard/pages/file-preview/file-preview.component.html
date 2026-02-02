@@ -12,7 +12,7 @@
         <thead>
           <tr class="file-preview__table-data-types">
             <th [attr.colspan]="2">Assign Column Types</th>
-            @for (column of columnConfigs(); track $index) {
+            @for (column of columnConfigs(); track column._id) {
               @if (column.columnName !== 'ID') {
                 <th>{{ column.columnName }}</th>
               }
@@ -21,7 +21,7 @@
 
           <tr class="file-preview__table-data-names">
             <th class="file-preview__table-data-row-number"></th>
-            @for (column of columnConfigs(); track $index) {
+            @for (column of columnConfigs(); track column._id) {
               @if (column.columnName === 'ID') {
                 <th>ID</th>
               } @else {
@@ -37,11 +37,11 @@
         </thead>
 
         <tbody class="file-preview__table-data-rows">
-          @for (row of file()!.preview; track $index; let index = $index) {
+          @for (row of file()!.preview; track row[0]; let index = $index) {
             <tr>
               <td class="file-preview__table-data-row-number">{{ index + 1 }}</td>
 
-              @for (column of columnConfigs(); track $index) {
+              @for (column of columnConfigs(); track column._id) {
                 @let value = row[column.columnName];
                 <td>
                   @switch (column.dataType) {
